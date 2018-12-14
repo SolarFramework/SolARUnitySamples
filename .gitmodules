@@ -1,0 +1,3 @@
+[submodule "Assets/Standard Assets/SolARUnityPlugin"]
+	path = Assets/Standard Assets/SolARUnityPlugin
+	url = git@gitlab.artefacto.fr:Research/ARGO/SolARUnityPlugin.git

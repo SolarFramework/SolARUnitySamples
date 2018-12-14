@@ -1,3 +1,2 @@
-# SolARUnitySamples
+# SolARUnityPlugin
 
-Unity project demonstrating uses of SolARUnityPlugin
