@@ -14,8 +14,18 @@
 * limitations under the License.
 */
 
+using SolAR.Api.Display;
+using SolAR.Api.Features;
+using SolAR.Api.Geom;
+using SolAR.Api.Image;
+using SolAR.Api.Input.Devices;
+using SolAR.Api.Input.Files;
+using SolAR.Api.Solver.Pose;
+using SolAR.Core;
+using SolAR.Datastructure;
+using UnityEngine;
 using UnityEngine.Assertions;
-using Transform3Df = SolAR.SWIGTYPE_p_SolAR__datastructure__TransformT_float_3_t; //TODO
+using XPCF;
 
 namespace SolAR.Samples
 {
@@ -44,9 +54,11 @@ namespace SolAR.Samples
         new ICamera camera;
         IMarker2DSquaredBinary binaryMarker;
 
+        /*
         IImageViewer imageViewer;
         IImageViewer imageViewerGrey;
         IImageViewer imageViewerBinary;
+        */
 
         IImageConvertor imageConvertor;
         IImageFilter imageFilterBinary;
@@ -71,9 +83,9 @@ namespace SolAR.Samples
         protected void Awake()
         {
             // structures
-            inputImage = new Image().AddTo(subscriptions);
-            greyImage = new Image().AddTo(subscriptions);
-            binaryImage = new Image().AddTo(subscriptions);
+            inputImage = SharedPtr.Alloc<Image>().AddTo(subscriptions);
+            greyImage = SharedPtr.Alloc<Image>().AddTo(subscriptions);
+            binaryImage = SharedPtr.Alloc<Image>().AddTo(subscriptions);
 
             contours = new Contour2DfList().AddTo(subscriptions);
             filtered_contours = new Contour2DfList().AddTo(subscriptions);
@@ -85,24 +97,14 @@ namespace SolAR.Samples
             pattern2DPoints = new Point2DfList().AddTo(subscriptions);
             img2DPoints = new Point2DfList().AddTo(subscriptions);
             pattern3DPoints = new Point3DfList().AddTo(subscriptions);
-            //*
-            var ptr = System.Runtime.InteropServices.Marshal.AllocHGlobal(100); //TODO
-            pose = (Transform3Df)System.Activator.CreateInstance
-                (
-                    typeof(Transform3Df),
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance,
-                    null,
-                    new object[] { ptr, false },
-                    null
-                );
-                /* */
+            pose = SharedPtr.Alloc<Transform3Df>();
         }
 
         protected void Start()
         {
             /* instantiate component manager*/
             /* this is needed in dynamic mode */
-            xpcfComponentManager = SolARWrapper.getComponentManagerInstance().AddTo(subscriptions);
+            xpcfComponentManager = xpcf.getComponentManagerInstance().AddTo(subscriptions);
 
             if (xpcfComponentManager.load(conf.path) != XPCFErrorCode._SUCCESS)
             {
@@ -117,9 +119,11 @@ namespace SolAR.Samples
             camera = xpcfComponentManager.create("SolARCameraOpencv").bindTo<ICamera>().AddTo(subscriptions);
             binaryMarker = xpcfComponentManager.create("SolARMarker2DSquaredBinaryOpencv").bindTo<IMarker2DSquaredBinary>().AddTo(subscriptions);
 
+            /*
             imageViewer = xpcfComponentManager.create("SolARImageViewerOpencv").bindTo<IImageViewer>().AddTo(subscriptions);
             imageViewerGrey = xpcfComponentManager.create("SolARImageViewerOpencv", "grey").bindTo<IImageViewer>().AddTo(subscriptions);
             imageViewerBinary = xpcfComponentManager.create("SolARImageViewerOpencv", "binary").bindTo<IImageViewer>().AddTo(subscriptions);
+            */
 
             imageConvertor = xpcfComponentManager.create("SolARImageConvertorOpencv").bindTo<IImageConvertor>().AddTo(subscriptions);
             imageFilterBinary = xpcfComponentManager.create("SolARImageFilterBinaryOpencv").bindTo<IImageFilter>().AddTo(subscriptions);
@@ -162,8 +166,8 @@ namespace SolAR.Samples
             img2worldMapperConf.getProperty("worldWidth").setFloatingValue(binaryMarker.getSize().width);
             img2worldMapperConf.getProperty("worldHeight").setFloatingValue(binaryMarker.getSize().height);
 
-            PnP.setCameraParameters(camera.getIntrinsicsParameters(), camera.getDistorsionParameters());
-            overlay3D.setCameraParameters(camera.getIntrinsicsParameters(), camera.getDistorsionParameters());
+            PnP.setCameraParameters(camera.getIntrinsicsParameters(), camera.getDistorsionParameters()); //TODO
+            overlay3D.setCameraParameters(camera.getIntrinsicsParameters(), camera.getDistorsionParameters()); //TODO
 
             if (camera.start() != FrameworkReturnCode._SUCCESS) // Camera
             {
@@ -222,21 +226,50 @@ namespace SolAR.Samples
                 }
             }
 
+            /*
             // display images in viewers
             enabled = (imageViewer.display(inputImage) == FrameworkReturnCode._SUCCESS);
             enabled = (imageViewerGrey.display(greyImage) == FrameworkReturnCode._SUCCESS);
             enabled = (imageViewerBinary.display(binaryImage) == FrameworkReturnCode._SUCCESS);
+            */
+
+            {
+                var w = (int)inputImage.getWidth();
+                var h = (int)inputImage.getHeight();
+                Assert.AreEqual(3, inputImage.getNbChannels());
+                Assert.AreEqual(8, inputImage.getNbBitsPerComponent());
+                Assert.AreEqual(Image.DataType.TYPE_8U, inputImage.getDataType());
+                Assert.AreEqual(Image.ImageLayout.LAYOUT_BGR, inputImage.getImageLayout());
+                Assert.AreEqual(Image.PixelOrder.INTERLEAVED, inputImage.getPixelOrder());
+                if (inputTex != null && (inputTex.width != w || inputTex.height != h))
+                {
+                    Destroy(inputTex);
+                    inputTex = null;
+                }
+                if (inputTex == null)
+                {
+                    inputTex = new Texture2D(w, h, TextureFormat.RGB24, false);
+                }
+                inputTex.LoadRawTextureData(inputImage.data(), (int)inputImage.getBufferSize());
+                inputTex.Apply();
+            }
         }
 
-        protected void OnDisable()
+        protected override void OnDisable()
         {
             end = clock();
             double duration = (double)(end - start) / CLOCKS_PER_SEC;
             printf("Elasped time is {0} seconds.", duration);
             printf("Number of processed frames per second : {0}", count / duration);
+            base.OnDisable();
+        }
 
-            foreach (var d in subscriptions) d.Dispose();
-            subscriptions.Clear();
+        Texture2D inputTex;
+
+        protected void OnGUI()
+        {
+            if (inputTex != null)
+                GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), inputTex);
         }
     }
 }

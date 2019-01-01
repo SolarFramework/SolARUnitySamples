@@ -1,42 +1,39 @@
-#if !FALSE
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using SolAR;
+using SolAR.Api.Input.Devices;
+using SolAR.Datastructure;
 using UnityEngine;
 using UnityEngine.Assertions;
+using XPCF;
 
 public class SolARTest : AbstractSample
 {
     //public Configuration conf;
     public string uuid = "5B7396F4-A804-4F3C-A0EB-FB1D56042BB4";
-    SWIGTYPE_p_org__bcom__xpcf__uuids__uuid UUID { get { return SolARWrapper.toUUID(uuid); } }
+    UUID UUID { get { return UUID.Create(uuid); } }
     IComponentManager xpcfComponentManager;
     IComponentIntrospect xpcfComponent;
     ICamera iCamera;
     Image image;
 
-    static SWIGTYPE_p_org__bcom__xpcf__uuids__uuid ToUUID(string uuid) { return SolARWrapper.toUUID(uuid); }
+    public RuntimeEditor runtimeEditor;
 
     public class KeyBasedEqualityComparer<T, TKey> : IEqualityComparer<T>
     {
-        private readonly Func<T, TKey> _keyGetter;
+        private readonly Func<T, TKey> keyGetter;
 
-        public KeyBasedEqualityComparer(Func<T, TKey> keyGetter)
-        {
-            _keyGetter = keyGetter;
-        }
+        public KeyBasedEqualityComparer(Func<T, TKey> keyGetter) { this.keyGetter = keyGetter; }
 
         public bool Equals(T x, T y)
         {
-            return EqualityComparer<TKey>.Default.Equals(_keyGetter(x), _keyGetter(y));
+            return EqualityComparer<TKey>.Default.Equals(keyGetter(x), keyGetter(y));
         }
 
         public int GetHashCode(T obj)
         {
-            TKey key = _keyGetter(obj);
-
+            TKey key = keyGetter(obj);
             return key == null ? 0 : key.GetHashCode();
         }
     }
@@ -45,10 +42,20 @@ public class SolARTest : AbstractSample
     {
         Extensions.modulesDict = conf.conf.modules.ToDictionary(m => m.name, m => m.uuid);
         Extensions.componentsDict = conf.conf.modules.SelectMany(m => m.components).ToDictionary(c => c.name, c => c.uuid);
-        IEqualityComparer<ConfXml.Module.Component.Interface> comp = new KeyBasedEqualityComparer<ConfXml.Module.Component.Interface, string>(i => i.uuid);
-        Extensions.interfacesDict = conf.conf.modules.SelectMany(m => m.components).SelectMany(c => c.interfaces).Distinct(comp).ToDictionary(i => i.name, i => i.uuid);
+        var comparer = new KeyBasedEqualityComparer<ConfXml.Module.Component.Interface, string>(i => i.uuid);
+        Extensions.interfacesDict = conf.conf.modules.SelectMany(m => m.components).SelectMany(c => c.interfaces).Distinct(comparer).ToDictionary(i => i.name, i => i.uuid);
 
-        image = new Image();
+        image = SharedPtr.Alloc<Image>().AddTo(subscriptions);
+    }
+
+    protected override void OnDisable()
+    {
+        //base.OnDisable();
+    }
+
+    protected void OnDestroy()
+    {
+        base.OnDisable();
     }
 
     void DictGui(string name, Dictionary<string, string> dictionary)
@@ -63,10 +70,10 @@ public class SolARTest : AbstractSample
         }
     }
 
-    bool isOpen;
+    bool isOpenUUID;
     protected void OnGUI()
     {
-        if (isOpen = GUILayout.Toggle(isOpen, "UUID"))
+        if (isOpenUUID = GUILayout.Toggle(isOpenUUID, "UUID"))
         {
             DictGui("Modules", Extensions.modulesDict);
             DictGui("Interfaces", Extensions.interfacesDict);
@@ -77,7 +84,7 @@ public class SolARTest : AbstractSample
         {
             if (GUILayout.Button("getManager"))
             {
-                xpcfComponentManager = SolARWrapper.getComponentManagerInstance();
+                xpcfComponentManager = xpcf.getComponentManagerInstance().AddTo(subscriptions);
             }
             GUILayout.Toggle(xpcfComponentManager != null, "OK");
             if (GUILayout.Button("load"))
@@ -86,10 +93,6 @@ public class SolARTest : AbstractSample
                 Debug.Log(path);
                 Debug.Log(xpcfComponentManager.load(path));
             }
-            if (GUILayout.Button("Dispose"))
-            {
-                xpcfComponentManager.Dispose();
-            }
             if (GUILayout.Button("clear"))
             {
                 xpcfComponentManager.clear();
@@ -97,48 +100,65 @@ public class SolARTest : AbstractSample
         }
         using (new GUILayout.HorizontalScope("Metadata", GUI.skin.window))
         {
-            if (GUILayout.Button("getModulesMetadata"))
+            if (GUILayout.Button("getModulesMD"))
             {
-                var modules = xpcfComponentManager.getModulesMetadata();
-                Debug.Log(modules);
-                Debug.Log(modules.size());
-                var e = modules.getEnumerator();
-                while (e.moveNext())
+                using (var modules = xpcfComponentManager.getModulesMetadata())
                 {
-                    var m = e.current();
-                    Debug.LogFormat("{0}: {1} : {2}", m.name(), m.getPath(), m.description());
+                    Debug.Log(modules);
+                    Debug.Log(modules.size());
+                    using (var e = modules.getEnumerator())
+                    {
+                        while (e.MoveNext())
+                        {
+                            using (var m = e.current())
+                            {
+                                Debug.LogFormat("{0}: {1} : {2}", m.name(), m.getPath(), m.description());
+                            }
+                        }
+                    }
                 }
             }
-            if (GUILayout.Button("getInterfacesMetadata"))
+            if (GUILayout.Button("getInterfacesMD"))
             {
-                var interfaces = xpcfComponentManager.getInterfacesMetadata();
-                Debug.Log(interfaces);
-                Debug.Log(interfaces.size());
-                var e = interfaces.getEnumerator();
-                while (e.moveNext())
+                using (var interfaces = xpcfComponentManager.getInterfacesMetadata())
                 {
-                    var i = e.current();
-                    //Debug.Log(i.getUUID());
-                    Debug.LogFormat("{0}: {1}", i.name(), i.description());
+                    Debug.Log(interfaces);
+                    Debug.Log(interfaces.size());
+                    using (var e = interfaces.getEnumerator())
+                    {
+                        while (e.MoveNext())
+                        {
+                            using (var i = e.current())
+                            {
+                                //Debug.Log(i.getUUID());
+                                Debug.LogFormat("{0}: {1}", i.name(), i.description());
+                            }
+                        }
+                    }
                 }
             }
-            if (GUILayout.Button("findComponentMetadata"))
+            if (GUILayout.Button("findComponentMD(UUID)"))
             {
-                Debug.Log(xpcfComponentManager.findComponentMetadata(UUID));
+                using (var x = xpcfComponentManager.findComponentMetadata(UUID)) Debug.Log(x);
             }
-            if (GUILayout.Button("findInterfaceMetadata"))
+            if (GUILayout.Button("findInterfaceMD(UUID)"))
             {
-                Debug.Log(xpcfComponentManager.findInterfaceMetadata(UUID));
+                using (var x = xpcfComponentManager.findInterfaceMetadata(UUID)) Debug.Log(x);
             }
-            if (GUILayout.Button("findModuleMetadata"))
+            if (GUILayout.Button("findModuleMD(UUID)"))
             {
-                Debug.Log(xpcfComponentManager.findModuleMetadata(UUID));
+                using (var x = xpcfComponentManager.findModuleMetadata(UUID)) Debug.Log(x);
+            }
+            if (GUILayout.Button("getModuleUUID(UUID)"))
+            {
+                using (var x = xpcfComponentManager.getModuleUUID(UUID)) Debug.Log(x);
             }
         }
         uuid = GUILayout.TextField(uuid);
-        if (GUILayout.Button("createComponent"))
+        if (GUILayout.Button("createComponent(UUID)"))
         {
-            xpcfComponent = xpcfComponentManager.createComponent(UUID);
+            xpcfComponent = xpcfComponentManager.createComponent(UUID).AddTo(subscriptions);
+            runtimeEditor.Add(xpcfComponent);
         }
         GUILayout.Toggle(xpcfComponent != null, "OK");
         using (new GUILayout.HorizontalScope("IComponentIntrospect", GUI.skin.window))
@@ -149,26 +169,27 @@ public class SolARTest : AbstractSample
             }
             if (GUILayout.Button("getInterfaces"))
             {
-                var interfaces = xpcfComponent.getInterfaces();
-                Debug.Log(interfaces);
-                /*
-                Debug.Log(interfaces.size());
-                var e = interfaces.getEnumerator();
-                while (e.moveNext())
+                using (var interfaces = xpcfComponent.getInterfaces())
                 {
-                    var i = e.current();
-                    //Debug.Log(i.getUUID());
-                    Debug.LogFormat("{0}: {1}", i.name(), i.description());
+                    Debug.Log(interfaces.size());
+                    using (var e = interfaces.getEnumerator())
+                    {
+                        while (e.MoveNext())
+                        {
+                            using (var i = e.current())
+                            {
+                                Debug.Log(xpcfComponent.getDescription(i));
+                            }
+                        }
+                    }
                 }
-                */
             }
-            if (GUILayout.Button("implements"))
+            if (GUILayout.Button("implements(UUID)"))
             {
                 Debug.Log(xpcfComponent.implements(UUID));
             }
-            if (GUILayout.Button("getDescription"))
+            if (GUILayout.Button("getDescription(UUID)"))
             {
-                Assert.IsTrue(xpcfComponent.implements(UUID));
                 Debug.Log(xpcfComponent.getDescription(UUID));
             }
         }
@@ -176,12 +197,12 @@ public class SolARTest : AbstractSample
         {
             if (GUILayout.Button("bindTo<ICamera>"))
             {
-                iCamera = xpcfComponent.bindTo<ICamera>();
+                iCamera = xpcfComponent.bindTo<ICamera>().AddTo(subscriptions);
             }
-            if (GUILayout.Button("queryInterface TODO"))
-            {
-                xpcfComponent = xpcfComponent.queryInterface(UUID);
-            }
+            //if (GUILayout.Button("queryInterface TODO"))
+            //{
+            //    xpcfComponent = xpcfComponent.queryInterface(UUID);
+            //}
         }
         GUILayout.Toggle(iCamera != null, "OK");
         using (new GUILayout.HorizontalScope("ICamera", GUI.skin.window))
@@ -192,15 +213,18 @@ public class SolARTest : AbstractSample
             }
             if (GUILayout.Button("getDistorsionParameters"))
             {
-                Debug.Log(iCamera.getDistorsionParameters());
+                using (var x = iCamera.getDistorsionParameters()) { Debug.Log(x); }
             }
             if (GUILayout.Button("getIntrinsicsParameters"))
             {
-                Debug.Log(iCamera.getIntrinsicsParameters());
+                using (var x = iCamera.getIntrinsicsParameters()) { Debug.Log(x); }
             }
             if (GUILayout.Button("getResolution"))
             {
-                Debug.Log(iCamera.getResolution());
+                using (var size = iCamera.getResolution())
+                {
+                    Debug.LogFormat("{0} x {1}", size.width, size.height);
+                }
             }
             if (GUILayout.Button("getNextImage"))
             {
@@ -213,20 +237,31 @@ public class SolARTest : AbstractSample
             if (GUILayout.Button("getWidth")) Debug.Log(image.getWidth());
             if (GUILayout.Button("getHeight")) Debug.Log(image.getHeight());
             if (GUILayout.Button("getNbChannels")) Debug.Log(image.getNbChannels());
-            if (GUILayout.Button("getSize")) Debug.Log(image.getSize());
+            if (GUILayout.Button("getSize")) { using (var size = image.getSize()) Debug.LogFormat("{0} x {1}", size.width, size.height); }
             if (GUILayout.Button("getNbBitsPerComponent")) Debug.Log(image.getNbBitsPerComponent());
             if (GUILayout.Button("getBufferSize")) Debug.Log(image.getBufferSize());
             if (GUILayout.Button("getDataType")) Debug.Log(image.getDataType());
             if (GUILayout.Button("getImageLayout")) Debug.Log(image.getImageLayout());
             if (GUILayout.Button("getPixelOrder")) Debug.Log(image.getPixelOrder());
         }
+        using (new GUILayout.HorizontalScope("Texture", GUI.skin.window))
+        {
+            if (GUILayout.Button("new"))
+            {
+                if (tex != null) Destroy(tex);
+                var w = (int)image.getWidth();
+                var h = (int)image.getHeight();
+                Assert.AreEqual(3, image.getNbChannels());
+                Assert.AreEqual(8, image.getNbBitsPerComponent());
+                Assert.AreEqual(Image.DataType.TYPE_8U, image.getDataType());
+                Assert.AreEqual(Image.ImageLayout.LAYOUT_BGR, image.getImageLayout());
+                Assert.AreEqual(Image.PixelOrder.INTERLEAVED, image.getPixelOrder());
+                tex = new Texture2D(w, h, TextureFormat.RGB24, false);
+            }
+            if (GUILayout.Button("LoadRawTextureData")) tex.LoadRawTextureData(image.data(), (int)image.getBufferSize());
+            if (GUILayout.Button("Apply")) tex.Apply();
+        }
+        if (tex != null) GUILayout.Label(tex);
     }
-
-    protected void OnDisable()
-    {
-        if (iCamera != null) iCamera.Dispose();
-        if (xpcfComponent != null) xpcfComponent.Dispose();
-        if (xpcfComponentManager != null) xpcfComponentManager.Dispose();
-    }
+    Texture2D tex;
 }
-#endif
