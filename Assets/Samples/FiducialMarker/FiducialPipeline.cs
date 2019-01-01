@@ -14,76 +14,55 @@
 * limitations under the License.
 */
 
-using SolAR.Api.Display;
 using SolAR.Api.Features;
 using SolAR.Api.Geom;
 using SolAR.Api.Image;
-using SolAR.Api.Input.Devices;
 using SolAR.Api.Input.Files;
 using SolAR.Api.Solver.Pose;
 using SolAR.Core;
 using SolAR.Datastructure;
-using UnityEngine;
 using UnityEngine.Assertions;
 using XPCF;
 
 namespace SolAR.Samples
 {
-    public class FiducialMarker : AbstractSample
+    public class FiducialPipeline : AbstractPipeline
     {
         // structures
-        Image inputImage;
-        Image greyImage;
-        Image binaryImage;
+        readonly Image greyImage;
+        readonly Image binaryImage;
 
-        Contour2DfList contours;
-        Contour2DfList filtered_contours;
-        ImageList patches;
-        Contour2DfList recognizedContours;
-        DescriptorBuffer recognizedPatternsDescriptors;
-        DescriptorBuffer markerPatternDescriptor;
-        DescriptorMatchVector patternMatches;
-        Point2DfList pattern2DPoints;
-        Point2DfList img2DPoints;
-        Point3DfList pattern3DPoints;
-        Transform3Df pose;
-
-        IComponentManager xpcfComponentManager;
+        readonly Contour2DfList contours;
+        readonly Contour2DfList filtered_contours;
+        readonly ImageList patches;
+        readonly Contour2DfList recognizedContours;
+        readonly DescriptorBuffer recognizedPatternsDescriptors;
+        readonly DescriptorBuffer markerPatternDescriptor;
+        readonly DescriptorMatchVector patternMatches;
+        readonly Point2DfList pattern2DPoints;
+        readonly Point2DfList img2DPoints;
+        readonly Point3DfList pattern3DPoints;
+        readonly Transform3Df pose;
 
         // components
-        //new ICamera camera;
-        IMarker2DSquaredBinary binaryMarker;
+        readonly IMarker2DSquaredBinary binaryMarker;
 
-        /*
-        IImageViewer imageViewer;
-        IImageViewer imageViewerGrey;
-        IImageViewer imageViewerBinary;
-        */
+        readonly IImageConvertor imageConvertor;
+        readonly IImageFilter imageFilterBinary;
+        readonly IContoursExtractor contoursExtractor;
+        readonly IContoursFilter contoursFilter;
+        readonly IPerspectiveController perspectiveController;
+        readonly IDescriptorsExtractorSBPattern patternDescriptorExtractor;
 
-        IImageConvertor imageConvertor;
-        IImageFilter imageFilterBinary;
-        IContoursExtractor contoursExtractor;
-        IContoursFilter contoursFilter;
-        IPerspectiveController perspectiveController;
-        IDescriptorsExtractorSBPattern patternDescriptorExtractor;
+        readonly IDescriptorMatcher patternMatcher;
+        readonly ISBPatternReIndexer patternReIndexer;
 
-        IDescriptorMatcher patternMatcher;
-        ISBPatternReIndexer patternReIndexer;
+        readonly IImage2WorldMapper img2worldMapper;
+        readonly I3DTransformFinderFrom2D3D PnP;
 
-        IImage2WorldMapper img2worldMapper;
-        I3DTransformFinderFrom2D3D PnP;
-        I3DOverlay overlay3D;
-
-        // to count the average number of processed frames per seconds
-        [SerializeField]
-        int count = 0;
-        long start;
-        long end;
-
-        protected void Awake()
+        public FiducialPipeline(IComponentManager xpcfComponentManager) : base(xpcfComponentManager)
         {
             // structures
-            inputImage = SharedPtr.Alloc<Image>().AddTo(subscriptions);
             greyImage = SharedPtr.Alloc<Image>().AddTo(subscriptions);
             binaryImage = SharedPtr.Alloc<Image>().AddTo(subscriptions);
 
@@ -97,33 +76,10 @@ namespace SolAR.Samples
             pattern2DPoints = new Point2DfList().AddTo(subscriptions);
             img2DPoints = new Point2DfList().AddTo(subscriptions);
             pattern3DPoints = new Point3DfList().AddTo(subscriptions);
-            pose = new Transform3Df();
-        }
+            pose = SharedPtr.Alloc<Transform3Df>();
 
-        protected void Start()
-        {
-            /* instantiate component manager*/
-            /* this is needed in dynamic mode */
-            xpcfComponentManager = xpcf.getComponentManagerInstance().AddTo(subscriptions);
-
-            if (xpcfComponentManager.load(conf.path) != XPCFErrorCode._SUCCESS)
-            {
-                LOG_ERROR("Failed to load the configuration file conf_FiducialMarker.xml");
-                enabled = false;
-                return;
-            }
-
-            // declare and create components
-            LOG_INFO("Start creating components");
-
-            //camera = xpcfComponentManager.create("SolARCameraOpencv").bindTo<ICamera>().AddTo(subscriptions);
+            // components
             binaryMarker = xpcfComponentManager.create("SolARMarker2DSquaredBinaryOpencv").bindTo<IMarker2DSquaredBinary>().AddTo(subscriptions);
-
-            /*
-            imageViewer = xpcfComponentManager.create("SolARImageViewerOpencv").bindTo<IImageViewer>().AddTo(subscriptions);
-            imageViewerGrey = xpcfComponentManager.create("SolARImageViewerOpencv", "grey").bindTo<IImageViewer>().AddTo(subscriptions);
-            imageViewerBinary = xpcfComponentManager.create("SolARImageViewerOpencv", "binary").bindTo<IImageViewer>().AddTo(subscriptions);
-            */
 
             imageConvertor = xpcfComponentManager.create("SolARImageConvertorOpencv").bindTo<IImageConvertor>().AddTo(subscriptions);
             imageFilterBinary = xpcfComponentManager.create("SolARImageFilterBinaryOpencv").bindTo<IImageFilter>().AddTo(subscriptions);
@@ -137,7 +93,6 @@ namespace SolAR.Samples
 
             img2worldMapper = xpcfComponentManager.create("SolARImage2WorldMapper4Marker2D").bindTo<IImage2WorldMapper>().AddTo(subscriptions);
             PnP = xpcfComponentManager.create("SolARPoseEstimationPnpOpencv").bindTo<I3DTransformFinderFrom2D3D>().AddTo(subscriptions);
-            overlay3D = xpcfComponentManager.create("SolAR3DOverlayBoxOpencv").bindTo<I3DOverlay>().AddTo(subscriptions);
 
             // components initialisation
             ok = binaryMarker.loadMarker();
@@ -145,14 +100,7 @@ namespace SolAR.Samples
             ok = patternDescriptorExtractor.extract(binaryMarker.getPattern(), markerPatternDescriptor);
             Assert.AreEqual(FrameworkReturnCode._SUCCESS, ok);
 
-            LOG_DEBUG("Marker pattern:\n {0}", binaryMarker.getPattern().getPatternMatrix());
-
             // Set the size of the box to display according to the marker size in world unit
-            var overlay3D_sizeProp = overlay3D.bindTo<IConfigurable>().getProperty("size");
-            var size = binaryMarker.getSize();
-            overlay3D_sizeProp.setFloatingValue(size.width, 0);
-            overlay3D_sizeProp.setFloatingValue(size.height, 1);
-            overlay3D_sizeProp.setFloatingValue(size.height / 2.0f, 2);
 
             int patternSize = binaryMarker.getPattern().getSize();
 
@@ -165,53 +113,13 @@ namespace SolAR.Samples
             img2worldMapperConf.getProperty("digitalHeight").setIntegerValue(patternSize);
             img2worldMapperConf.getProperty("worldWidth").setFloatingValue(binaryMarker.getSize().width);
             img2worldMapperConf.getProperty("worldHeight").setFloatingValue(binaryMarker.getSize().height);
-
-#if FALSE
-            PnP.setCameraParameters(camera.getIntrinsicsParameters(), camera.getDistorsionParameters());
-            overlay3D.setCameraParameters(camera.getIntrinsicsParameters(), camera.getDistorsionParameters());
-
-            if (camera.start() != FrameworkReturnCode._SUCCESS) // Camera
-            {
-                LOG_ERROR("Camera cannot start");
-                enabled = false;
-            }
-#else
-            var webcam = new WebCamTexture();
-            webcam.Play();
-            if(!webcam.isPlaying)
-            {
-                LOG_ERROR("Camera cannot start");
-                enabled = false;
-            }
-#endif
-
-            start = clock();
         }
 
-        readonly WebCamTexture webcam;
+        public Sizef GetMarkerSize(){ return binaryMarker.getSize(); }
+        public void SetCameraParameters(Matrix3x3 intrinsics, CamDistortion distorsion) {PnP.setCameraParameters(intrinsics, distorsion); }
 
-        protected void Update()
+        protected FrameworkReturnCode Proceed(Image inputImage)
         {
-#if FALSE
-            if (camera.getNextImage(inputImage) == FrameworkReturnCode._ERROR_)
-                return;
-#else
-            if(!webcam.didUpdateThisFrame)
-                return;
-            var ptr = webcam.GetNativeTexturePtr();
-            if (inputTex == null)
-            {
-                int w = webcam.width;
-                int h = webcam.height;
-                inputTex = Texture2D.CreateExternalTexture(w, h, TextureFormat.RGB24, false, false, ptr);
-            }
-            else
-            {
-                inputTex.UpdateExternalTexture(ptr);
-            }
-#endif
-            count++;
-
             // Convert Image from RGB to grey
             ok = imageConvertor.convert(inputImage, greyImage, Image.ImageLayout.LAYOUT_GREY);
             Assert.AreEqual(FrameworkReturnCode._SUCCESS, ok);
@@ -247,40 +155,11 @@ namespace SolAR.Samples
                     // Compute the pose of the camera using a Perspective n Points algorithm using only the 4 corners of the marker
                     if (PnP.estimate(img2DPoints, pattern3DPoints, pose) == FrameworkReturnCode._SUCCESS)
                     {
-                        // LOG_DEBUG("Camera pose : \n {}", pose.matrix());
-                        // Display a 3D box over the marker
-                        overlay3D.draw(pose, inputImage);
+                        return FrameworkReturnCode._SUCCESS;
                     }
                 }
             }
-
-            /*
-            // display images in viewers
-            enabled = (imageViewer.display(inputImage) == FrameworkReturnCode._SUCCESS);
-            enabled = (imageViewerGrey.display(greyImage) == FrameworkReturnCode._SUCCESS);
-            enabled = (imageViewerBinary.display(binaryImage) == FrameworkReturnCode._SUCCESS);
-            */
-
-            inputImage.ToUnity(ref inputTex);
-        }
-
-        protected override void OnDisable()
-        {
-            end = clock();
-            double duration = (double)(end - start) / CLOCKS_PER_SEC;
-            printf("Elasped time is {0} seconds.", duration);
-            printf("Number of processed frames per second : {0}", count / duration);
-            base.OnDisable();
-        }
-
-        Texture2D inputTex;
-
-        protected void OnGUI()
-        {
-            if (inputTex != null)
-            {
-                GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), inputTex);
-            }
+            return FrameworkReturnCode._ERROR_;
         }
     }
 }
