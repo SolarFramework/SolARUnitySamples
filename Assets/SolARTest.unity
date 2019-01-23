@@ -113,6 +113,107 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &221382095
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 221382100}
+  - component: {fileID: 221382099}
+  - component: {fileID: 221382098}
+  - component: {fileID: 221382097}
+  - component: {fileID: 221382096}
+  m_Layer: 0
+  m_Name: Sphere
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &221382096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 221382095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2959e87b80baf4b8c20b0836ecf308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  solARManager: {fileID: 760057294}
+  materials:
+  - {fileID: 2100000, guid: 5ddf7cebd15909b4fa1f2e78a2189b13, type: 2}
+  property: _MainTex
+--- !u!135 &221382097
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 221382095}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &221382098
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 221382095}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 2100000, guid: 5ddf7cebd15909b4fa1f2e78a2189b13, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &221382099
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 221382095}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &221382100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 221382095}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &306338999
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,6 +290,8 @@ GameObject:
   - component: {fileID: 571934192}
   - component: {fileID: 571934191}
   - component: {fileID: 571934190}
+  - component: {fileID: 571934194}
+  - component: {fileID: 571934193}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -256,6 +359,492 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &571934193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 571934189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd0fff3eb49157d449c048665dc2247b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  solARManager: {fileID: 760057294}
+--- !u!114 &571934194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 571934189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fb04ee474d4bbb4ebd0024af3c80680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  solARManager: {fileID: 760057294}
+--- !u!1 &760057293
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 760057295}
+  - component: {fileID: 760057294}
+  m_Layer: 0
+  m_Name: SolAR_FiducialMarker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &760057294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 760057293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3741ea27f740804e9fc6e05f7d23e17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conf:
+    path: Assets\Samples\FiducialMarker\conf_FiducialMarker.xml
+    conf:
+      modules:
+      - uuid: 15e1990b-86b2-445c-8194-0cbe80ede970
+        name: SolARModuleOpenCV
+        path: Assets\Standard Assets\SolARUnityPlugin\Plugins
+        description: OpenCV
+        components:
+        - uuid: 5B7396F4-A804-4F3C-A0EB-FB1D56042BB4
+          name: SolARCameraOpencv
+          description: SolARCameraOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 5DDC7DF0-8377-437F-9C81-3643F7676A5B
+            name: ICamera
+            description: ICamera
+        - uuid: fa4a780a-9720-11e8-9eb6-529269fb1459
+          name: SolARVideoAsCameraOpencv
+          description: SolARVideoAsCameraOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 5DDC7DF0-8377-437F-9C81-3643F7676A5B
+            name: ICamera
+            description: ICamera
+        - uuid: 5d2b8da9-528e-4e5e-96c1-f883edcf3b1c
+          name: SolARMarker2DSquaredBinaryOpencv
+          description: SolARMarker2DSquaredBinaryOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 3c9cee8a-e9ca-4c16-851a-669a94c2a68d
+            name: IMarker
+            description: IMarker
+          - uuid: e9cdcf6e-c54c-11e7-abc4-cec278b6b50a
+            name: IMarker2DSquared
+            description: IMarker2DSquared
+          - uuid: 12d592ff-aa46-40a6-8d65-7fbfb382d60b
+            name: IMarker2DSquaredBinary
+            description: IMarker2DSquaredBinary
+        - uuid: 4309dcc6-cc73-11e7-abc4-cec278b6b50a
+          name: SolARContoursFilterBinaryMarkerOpencv
+          description: SolARContoursFilterBinaryMarkerOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 6b3de3a0-cc72-11e7-abc4-cec278b6b50a
+            name: IContoursFilter
+            description: IContoursFilter
+        - uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
+          name: SolARImageViewerOpencv
+          description: SolARImageViewerOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: b05f3dbb-f93d-465c-aee1-fb58e1480c42
+            name: IImageViewer
+            description: IImageViewer
+        - uuid: e5fd7e9a-fcae-4f86-bfc7-ea8584c298b2
+          name: SolARImageFilterBinaryOpencv
+          description: SolARImageFilterBinaryOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: f7948ae2-e994-416f-be40-dd404ca03a83
+            name: IImageFilter
+            description: IImageFilter
+        - uuid: fd7fb607-144f-418c-bcf2-f7cf71532c22
+          name: SolARImageConvertorOpencv
+          description: SolARImageConvertorOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 9c982719-6cb4-4831-aa88-9e01afacbd16
+            name: IImageConvertor
+            description: IImageConvertor
+        - uuid: 6acf8de2-cc63-11e7-abc4-cec278b6b50a
+          name: SolARContoursExtractorOpencv
+          description: SolARContoursExtractorOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 42d82ab6-cc62-11e7-abc4-cec278b6b50a
+            name: IContoursExtractor
+            description: IContoursExtractor
+        - uuid: 9c960f2a-cd6e-11e7-abc4-cec278b6b50a
+          name: SolARPerspectiveControllerOpencv
+          description: SolARPerspectiveControllerOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 4a7d5c34-cd6e-11e7-abc4-cec278b6b50a
+            name: IPerspectiveController
+            description: IPerspectiveController
+        - uuid: d25625ba-ce3a-11e7-abc4-cec278b6b50a
+          name: SolARDescriptorsExtractorSBPatternOpencv
+          description: SolARDescriptorsExtractorSBPatternOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 2e2bde18-ce39-11e7-abc4-cec278b6b50a
+            name: IDescriptorsExtractorSBPattern
+            description: IDescriptorsExtractorSBPattern
+        - uuid: 549f7873-96e4-4eae-b4a0-ae8d80664ce5
+          name: SolARDescriptorMatcherRadiusOpencv
+          description: SolARDescriptorMatcherRadiusOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: dda38a40-c50a-4e7d-8433-0f04c7c98518
+            name: IDescriptorMatcher
+            description: IDescriptorMatcher
+        - uuid: 0753ade1-7932-4e29-a71c-66155e309a53
+          name: SolARPoseEstimationPnpOpencv
+          description: SolARPoseEstimationPnpOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 77281cda-47c2-4bb7-bde6-5b0d02e75dae
+            name: I3DTransformFinder
+            description: I3DTransformFinder
+        - uuid: cc51d685-9797-4ffd-a9dd-cec4f367fa6a
+          name: SolAR2DOverlayOpencv
+          description: SolAR2DOverlayOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 62b8b0b5-9344-40e6-a288-e609eb3ff0f1
+            name: I2DOverlay
+            description: I2DOverlay
+        - uuid: 2db01f59-9793-4cd5-8e13-b25d0ed5735b
+          name: SolAR3DOverlayBoxOpencv
+          description: SolAR3DOverlayBoxOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 81a20f52-6bf9-4949-b914-df2f614bc945
+            name: I3DOverlay
+            description: I3DOverlay
+      - uuid: 28b89d39-41bd-451d-b19e-d25a3d7c5797
+        name: SolARModuleTools
+        path: Assets\Standard Assets\SolARUnityPlugin\Plugins
+        description: Tools
+        components:
+        - uuid: a2ef5542-029e-4fce-9974-0aea14b29d6f
+          name: SolARSBPatternReIndexer
+          description: SolARSBPatternReIndexer
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 79c5b810-d557-11e7-9296-cec278b6b50a
+            name: ISBPatternReIndexer
+            description: ISBPatternReIndexer
+        - uuid: 6fed0169-4f01-4545-842a-3e2425bee248
+          name: SolARImage2WorldMapper4Marker2D
+          description: SolARImage2WorldMapper4Marker2D
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 67bcd080-258d-4b16-b693-cd30c013eb05
+            name: IImage2WorldMapper
+            description: IImage2WorldMapper
+      configuration:
+        components:
+        - type: SolARCameraOpencv
+          uuid: 5B7396F4-A804-4F3C-A0EB-FB1D56042BB4
+          name: 
+          properties:
+          - name: calibrationFile
+            type: string
+            value: camera_calibration.yml
+            values: []
+          - name: deviceID
+            type: UnsignedInteger
+            value: 0
+            values: []
+        - type: SolARVideoAsCameraOpencv
+          uuid: fa4a780a-9720-11e8-9eb6-529269fb1459
+          name: 
+          properties:
+          - name: calibrationFile
+            type: string
+            value: camera_calibration.yml
+            values: []
+          - name: videoPath
+            type: string
+            value: video.mp4
+            values: []
+        - type: SolARMarker2DSquaredBinaryOpencv
+          uuid: 5d2b8da9-528e-4e5e-96c1-f883edcf3b1c
+          name: 
+          properties:
+          - name: filePath
+            type: string
+            value: fiducialMarker.yml
+            values: []
+        - type: SolARImageFilterBinaryOpencv
+          uuid: e5fd7e9a-fcae-4f86-bfc7-ea8584c298b2
+          name: 
+          properties:
+          - name: min
+            type: Integer
+            value: -1
+            values: []
+          - name: max
+            type: Integer
+            value: 255
+            values: []
+        - type: SolARContoursExtractorOpencv
+          uuid: 6acf8de2-cc63-11e7-abc4-cec278b6b50a
+          name: 
+          properties:
+          - name: minContourEdges
+            type: Integer
+            value: 4
+            values: []
+        - type: SolARContoursFilterBinaryMarkerOpencv
+          uuid: 4309dcc6-cc73-11e7-abc4-cec278b6b50a
+          name: 
+          properties:
+          - name: epsilon
+            type: Float
+            value: 0.05
+            values: []
+          - name: minContourLength
+            type: Float
+            value: 20.0
+            values: []
+          - name: minDistanceBetweenContourCorners
+            type: Float
+            value: 10.0
+            values: []
+        - type: SolARPerspectiveControllerOpencv
+          uuid: 9c960f2a-cd6e-11e7-abc4-cec278b6b50a
+          name: 
+          properties:
+          - name: outputImageWidth
+            type: Integer
+            value: 640
+            values: []
+          - name: outputImageHeight
+            type: Integer
+            value: 480
+            values: []
+        - type: SolAR2DOverlayOpencv
+          uuid: cc51d685-9797-4ffd-a9dd-cec4f367fa6a
+          name: contours
+          properties:
+          - name: color
+            type: UnsignedInteger
+            value: 
+            values:
+            - 128
+            - 128
+            - 128
+          - name: thickness
+            type: UnsignedInteger
+            value: 3
+            values: []
+        - type: SolAR2DOverlayOpencv
+          uuid: cc51d685-9797-4ffd-a9dd-cec4f367fa6a
+          name: circles
+          properties:
+          - name: thickness
+            type: UnsignedInteger
+            value: 3
+            values: []
+          - name: radius
+            type: UnsignedInteger
+            value: 6
+            values: []
+          - name: randomColor
+            type: UnsignedInteger
+            value: 1
+            values: []
+        - type: SolAR3DOverlayBoxOpencv
+          uuid: 2db01f59-9793-4cd5-8e13-b25d0ed5735b
+          name: 
+          properties:
+          - name: position
+            type: Float
+            value: 
+            values:
+            - 0
+            - 0
+            - 0
+          - name: orientation
+            type: Float
+            value: 
+            values:
+            - 0.0
+            - 0.0
+            - 0.0
+          - name: size
+            type: Float
+            value: 
+            values:
+            - 0.157
+            - 0.157
+            - 0.157
+        - type: SolARImageViewerOpencv
+          uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
+          name: 
+          properties:
+          - name: title
+            type: string
+            value: Original Image
+            values: []
+          - name: exitKey
+            type: Integer
+            value: 27
+            values: []
+          - name: width
+            type: Integer
+            value: 0
+            values: []
+          - name: height
+            type: Integer
+            value: 0
+            values: []
+        - type: SolARImageViewerOpencv
+          uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
+          name: grey
+          properties:
+          - name: title
+            type: string
+            value: Grey Image
+            values: []
+          - name: exitKey
+            type: Integer
+            value: 27
+            values: []
+          - name: width
+            type: Integer
+            value: 0
+            values: []
+          - name: height
+            type: Integer
+            value: 0
+            values: []
+        - type: SolARImageViewerOpencv
+          uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
+          name: binary
+          properties:
+          - name: title
+            type: string
+            value: Binary Image
+            values: []
+          - name: exitKey
+            type: Integer
+            value: 27
+            values: []
+          - name: width
+            type: Integer
+            value: 0
+            values: []
+          - name: height
+            type: Integer
+            value: 0
+            values: []
+        - type: SolARImageViewerOpencv
+          uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
+          name: contours
+          properties:
+          - name: title
+            type: string
+            value: Contours Image
+            values: []
+          - name: exitKey
+            type: Integer
+            value: 27
+            values: []
+          - name: width
+            type: Integer
+            value: 0
+            values: []
+          - name: height
+            type: Integer
+            value: 0
+            values: []
+        - type: SolARImageViewerOpencv
+          uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
+          name: filteredContours
+          properties:
+          - name: title
+            type: string
+            value: Filtered Contours Image
+            values: []
+          - name: exitKey
+            type: Integer
+            value: 27
+            values: []
+          - name: width
+            type: Integer
+            value: 0
+            values: []
+          - name: height
+            type: Integer
+            value: 0
+            values: []
+  source: 0
+  display: 2
+  mogrify: 1
+  count: 0
+--- !u!4 &760057295
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 760057293}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &796315791
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,7 +860,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &796315792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -701,7 +1290,6 @@ MonoBehaviour:
             type: Integer
             value: 0
             values: []
-  argv: []
   uuid: 5B7396F4-A804-4F3C-A0EB-FB1D56042BB4
   runtimeEditor: {fileID: 1096780298}
 --- !u!4 &796315793
@@ -750,6 +1338,491 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1096780297}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1446960883
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1446960885}
+  - component: {fileID: 1446960884}
+  m_Layer: 0
+  m_Name: SolAR_NaturalImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1446960884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1446960883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efeaae34600f1c242aeab0335a819141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conf:
+    path: Assets\Samples\NaturalImage\conf_NaturalImageMarker.xml
+    conf:
+      modules:
+      - uuid: 15e1990b-86b2-445c-8194-0cbe80ede970
+        name: SolARModuleOpenCV
+        path: Assets\Standard Assets\SolARUnityPlugin\Plugins
+        description: OpenCV
+        components:
+        - uuid: 5B7396F4-A804-4F3C-A0EB-FB1D56042BB4
+          name: SolARCameraOpencv
+          description: SolARCameraOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 5DDC7DF0-8377-437F-9C81-3643F7676A5B
+            name: ICamera
+            description: ICamera
+        - uuid: fa4a780a-9720-11e8-9eb6-529269fb1459
+          name: SolARVideoAsCameraOpencv
+          description: SolARVideoAsCameraOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 5DDC7DF0-8377-437F-9C81-3643F7676A5B
+            name: ICamera
+            description: ICamera
+        - uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
+          name: SolARImageViewerOpencv
+          description: SolARImageViewerOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: b05f3dbb-f93d-465c-aee1-fb58e1480c42
+            name: IImageViewer
+            description: IImageViewer
+        - uuid: efcdb590-c570-11e7-abc4-cec278b6b50a
+          name: SolARMarker2DNaturalImageOpencv
+          description: SolARMarker2DNaturalImageOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 3c9cee8a-e9ca-4c16-851a-669a94c2a68d
+            name: IMarker
+            description: IMarker
+          - uuid: e9cdcf6e-c54c-11e7-abc4-cec278b6b50a
+            name: IMarker2DSquared
+            description: IMarker2DSquared
+          - uuid: 8fed06f8-c54d-11e7-abc4-cec278b6b50a
+            name: IMarker2DNaturalImage
+            description: IMarker2DNaturalImage
+        - uuid: e81c7e4e-7da6-476a-8eba-078b43071272
+          name: SolARKeypointDetectorOpencv
+          description: SolARKeypointDetectorOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 0eadc8b7-1265-434c-a4c6-6da8a028e06e
+            name: IKeypointDetector
+            description: IKeypointDetector
+        - uuid: 7823dac8-1597-41cf-bdef-59aa22f3d40a
+          name: SolARDescriptorMatcherKNNOpencv
+          description: SolARDescriptorMatcherKNNOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: dda38a40-c50a-4e7d-8433-0f04c7c98518
+            name: IDescriptorMatcher
+            description: IDescriptorMatcher
+        - uuid: 3731691e-2c4c-4d37-a2ce-06d1918f8d41
+          name: SolARGeometricMatchesFilterOpencv
+          description: SolARGeometricMatchesFilterOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: e0d6cc82-6af2-493d-901a-2384fca0b16f
+            name: IMatchesFilter
+            description: IMatchesFilter
+        - uuid: fb9dac20-2a44-44b2-aa42-2871eec31427
+          name: SolARHomographyEstimationOpencv
+          description: SolARHomographyEstimationOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 45dd370a-0eab-4a7f-93d0-43453b4c7517
+            name: Transform2DFinder
+            description: Transform2DFinder
+        - uuid: 0753ade1-7932-4e29-a71c-66155e309a53
+          name: SolARPoseEstimationPnpOpencv
+          description: SolARPoseEstimationPnpOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 77281cda-47c2-4bb7-bde6-5b0d02e75dae
+            name: I3DTransformFinder
+            description: I3DTransformFinder
+        - uuid: a38edf79-f0dc-45ca-92fc-2b336fceedf9
+          name: SolARPoseEstimationPnpEPFL
+          description: SolARPoseEstimationPnpEPFL
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 77281cda-47c2-4bb7-bde6-5b0d02e75dae
+            name: I3DTransformFinderFrom2D3D
+            description: I3DTransformFinderFrom2D3D
+        - uuid: cc51d685-9797-4ffd-a9dd-cec4f367fa6a
+          name: SolAR2DOverlayOpencv
+          description: SolAR2DOverlayOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 62b8b0b5-9344-40e6-a288-e609eb3ff0f1
+            name: I2DOverlay
+            description: I2DOverlay
+        - uuid: e95302be-3fe1-44e0-97bf-a98380464af9
+          name: SolARSideBySideOverlayOpencv
+          description: SolARSideBySideOverlayOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: a801354a-3e00-467c-b390-48c76fa8c53a
+            name: ISideBySideOverlay
+            description: ISideBySideOverlay
+        - uuid: 2db01f59-9793-4cd5-8e13-b25d0ed5735b
+          name: SolAR3DOverlayOpencv
+          description: SolAR3DOverlayOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 81a20f52-6bf9-4949-b914-df2f614bc945
+            name: I3DOverlay
+            description: I3DOverlay
+        - uuid: c8cc68db-9abd-4dab-9204-2fe4e9d010cd
+          name: SolARDescriptorsExtractorAKAZEOpencv
+          description: SolARDescriptorsExtractorAKAZEOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: c0e49ff1-0696-4fe6-85a8-9b2c1e155d2e
+            name: IDescriptorsExtractor
+            description: IDescriptorsExtractor
+        - uuid: 21238c00-26dd-11e8-b467-0ed5f89f718b
+          name: SolARDescriptorsExtractorAKAZE2Opencv
+          description: SolARDescriptorsExtractorAKAZE2Opencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: c0e49ff1-0696-4fe6-85a8-9b2c1e155d2e
+            name: IDescriptorsExtractor
+            description: IDescriptorsExtractor
+        - uuid: 2db01f59-9793-4cd5-8e13-b25d0ed5735b
+          name: SolAR3DOverlayBoxOpencv
+          description: SolAR3DOverlayBoxOpencv
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 81a20f52-6bf9-4949-b914-df2f614bc945
+            name: I3DOverlay
+            description: I3DOverlay
+      - uuid: 28b89d39-41bd-451d-b19e-d25a3d7c5797
+        name: SolARModuleTools
+        path: Assets\Standard Assets\SolARUnityPlugin\Plugins
+        description: Module Tools
+        components:
+        - uuid: cbb620c3-a7fc-42d7-bcbf-f59b475b23b0
+          name: SolARBasicMatchesFilter
+          description: SolARBasicMatchesFilter
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: e0d6cc82-6af2-493d-901a-2384fca0b16f
+            name: IMatchesFilter
+            description: IMatchesFilter
+        - uuid: 112f9f03-79c1-4393-b8f3-e02227bebfed
+          name: SolARHomographyValidation
+          description: SolARHomographyValidation
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: e95e8f70-dd32-11e7-9296-cec278b6b50a
+            name: IHomographyValidation
+            description: IHomographyValidation
+        - uuid: c2836cc0-0344-4956-8959-84936fb4bcf2
+          name: SolARKeypointsReIndexer
+          description: SolARKeypointsReIndexer
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 920e64a2-df17-11e7-80c1-9a214cf093ae
+            name: IKeypointsReIndexer
+            description: IKeypointsReIndexer
+        - uuid: 6fed0169-4f01-4545-842a-3e2425bee248
+          name: SolARImage2WorldMapper4Marker2D
+          description: SolARImage2WorldMapper4Marker2D
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: 67bcd080-258d-4b16-b693-cd30c013eb05
+            name: IImage2WorldMapper
+            description: IImage2WorldMapper
+        - uuid: edcedc0a-9841-4377-aea1-9fa9fdb46fde
+          name: SolAR2DTransform
+          description: SolAR2DTransform
+          interfaces:
+          - uuid: 125f2007-1bf9-421d-9367-fbdc1210d006
+            name: IComponentIntrospect
+            description: IComponentIntrospect
+          - uuid: dbf5a8a1-cbcb-4a95-8dfd-4d9d5877e56f
+            name: I2DTransform
+            description: I2DTransform
+      configuration:
+        components:
+        - type: SolARCameraOpencv
+          uuid: 5B7396F4-A804-4F3C-A0EB-FB1D56042BB4
+          name: 
+          properties:
+          - name: calibrationFile
+            type: string
+            value: camera_calibration.yml
+            values: []
+          - name: deviceID
+            type: UnsignedInteger
+            value: 0
+            values: []
+        - type: SolARVideoAsCameraOpencv
+          uuid: fa4a780a-9720-11e8-9eb6-529269fb1459
+          name: 
+          properties:
+          - name: calibrationFile
+            type: string
+            value: camera_calibration.yml
+            values: []
+          - name: videoPath
+            type: string
+            value: video.mp4
+            values: []
+        - type: SolARMarker2DNaturalImageOpencv
+          uuid: efcdb590-c570-11e7-abc4-cec278b6b50a
+          name: 
+          properties:
+          - name: filePath
+            type: string
+            value: grafMarker.yml
+            values: []
+        - type: SolARKeypointDetectorOpencv
+          uuid: e81c7e4e-7da6-476a-8eba-078b43071272
+          name: 
+          properties:
+          - name: type
+            type: string
+            value: AKAZE2
+            values: []
+          - name: imageRatio
+            type: Float
+            value: 0.5
+            values: []
+          - name: nbDescriptors
+            type: Integer
+            value: 1000
+            values: []
+        - type: SolARDescriptorMatcherKNNOpencv
+          uuid: 7823dac8-1597-41cf-bdef-59aa22f3d40a
+          name: 
+          properties:
+          - name: distanceRatio
+            type: Float
+            value: 0.75
+            values: []
+        - type: SolARGeometricMatchesFilterOpencv
+          uuid: 3731691e-2c4c-4d37-a2ce-06d1918f8d41
+          name: 
+          properties:
+          - name: m_confidenceLevel
+            type: Double
+            value: 0.99
+            values: []
+          - name: m_outlierDistanceRatio
+            type: Double
+            value: 0.006
+            values: []
+        - type: SolARHomographyEstimationOpencv
+          uuid: fb9dac20-2a44-44b2-aa42-2871eec31427
+          name: 
+          properties:
+          - name: ransacReprojThreshold
+            type: Double
+            value: 8.0
+            values: []
+        - type: <color=red><b>???</b></color>
+          uuid: 31188e79-6bd5-43df-9633-6d6c5d7afb5c
+          name: 
+          properties:
+          - name: oppositeSideRatio
+            type: Float
+            value: 0.5
+            values: []
+          - name: surfaceRatio
+            type: Float
+            value: 0.15
+            values: []
+          - name: maxOppositeDotProduct
+            type: Float
+            value: 0.9
+            values: []
+        - type: SolARPoseEstimationPnpOpencv
+          uuid: 0753ade1-7932-4e29-a71c-66155e309a53
+          name: 
+          properties:
+          - name: iterationsCount
+            type: Integer
+            value: 1000
+            values: []
+          - name: reprojError
+            type: Float
+            value: 4.0
+            values: []
+          - name: confidence
+            type: Float
+            value: 0.99
+            values: []
+        - type: SolARPoseEstimationPnpEPFL
+          uuid: a38edf79-f0dc-45ca-92fc-2b336fceedf9
+          name: 
+          properties:
+          - name: maxNumberCorrespondences
+            type: Integer
+            value: 200
+            values: []
+        - type: SolARDescriptorsExtractorAKAZE2Opencv
+          uuid: 21238c00-26dd-11e8-b467-0ed5f89f718b
+          name: 
+          properties:
+          - name: threshold
+            type: Float
+            value: 3e-4
+            values: []
+        - type: SolAR3DOverlayOpencv
+          uuid: 2db01f59-9793-4cd5-8e13-b25d0ed5735b
+          name: 
+          properties:
+          - name: position
+            type: Float
+            value: 
+            values:
+            - 0
+            - 0
+            - 0
+          - name: orientation
+            type: Float
+            value: 
+            values:
+            - 0.0
+            - 0.0
+            - 0.0
+          - name: size
+            type: Float
+            value: 
+            values:
+            - 0.285
+            - 0.197
+            - 0.1
+        - type: SolAR2DOverlayOpencv
+          uuid: cc51d685-9797-4ffd-a9dd-cec4f367fa6a
+          name: 
+          properties:
+          - name: thickness
+            type: UnsignedInteger
+            value: 1
+            values: []
+          - name: radius
+            type: UnsignedInteger
+            value: 3
+            values: []
+          - name: color
+            type: UnsignedInteger
+            value: 
+            values:
+            - 0
+            - 255
+            - 0
+          - name: randomColor
+            type: UnsignedInteger
+            value: 0
+            values: []
+        - type: SolARImageViewerOpencv
+          uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
+          name: 
+          properties:
+          - name: title
+            type: string
+            value: Natural Image Marker
+            values: []
+          - name: exitKey
+            type: Integer
+            value: 27
+            values: []
+          - name: width
+            type: Integer
+            value: 0
+            values: []
+          - name: height
+            type: Integer
+            value: 0
+            values: []
+        - type: SolARImageViewerOpencv
+          uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
+          name: keypoints
+          properties:
+          - name: title
+            type: string
+            value: Reference KeyPoints
+            values: []
+          - name: exitKey
+            type: Integer
+            value: 27
+            values: []
+          - name: width
+            type: Integer
+            value: 0
+            values: []
+          - name: height
+            type: Integer
+            value: 0
+            values: []
+  count: 0
+--- !u!4 &1446960885
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1446960883}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -824,8 +1897,8 @@ MonoBehaviour:
             name: IMarker
             description: IMarker
           - uuid: e9cdcf6e-c54c-11e7-abc4-cec278b6b50a
-            name: IMarker2Dquared
-            description: IMarker2Dquared
+            name: IMarker2DSquared
+            description: IMarker2DSquared
           - uuid: 12d592ff-aa46-40a6-8d65-7fbfb382d60b
             name: IMarker2DSquaredBinary
             description: IMarker2DSquaredBinary
@@ -1202,7 +2275,6 @@ MonoBehaviour:
             type: Integer
             value: 0
             values: []
-  argv: []
   count: 0
 --- !u!4 &1517995526
 Transform:

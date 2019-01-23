@@ -4,15 +4,17 @@ using System.Linq;
 using SolAR;
 using SolAR.Api.Input.Devices;
 using SolAR.Datastructure;
+using UniRx;
 using UnityEngine;
 using UnityEngine.Assertions;
-using XPCF;
+using XPCF.Api;
+using XPCF.Core;
 
 public class SolARTest : AbstractSample
 {
     //public Configuration conf;
     public string uuid = "5B7396F4-A804-4F3C-A0EB-FB1D56042BB4";
-    UUID UUID { get { return UUID.Create(uuid); } }
+    UUID UUID { get { return new UUID(uuid); } }
     IComponentManager xpcfComponentManager;
     IComponentIntrospect xpcfComponent;
     ICamera iCamera;
@@ -20,31 +22,8 @@ public class SolARTest : AbstractSample
 
     public RuntimeEditor runtimeEditor;
 
-    public class KeyBasedEqualityComparer<T, TKey> : IEqualityComparer<T>
-    {
-        private readonly Func<T, TKey> keyGetter;
-
-        public KeyBasedEqualityComparer(Func<T, TKey> keyGetter) { this.keyGetter = keyGetter; }
-
-        public bool Equals(T x, T y)
-        {
-            return EqualityComparer<TKey>.Default.Equals(keyGetter(x), keyGetter(y));
-        }
-
-        public int GetHashCode(T obj)
-        {
-            TKey key = keyGetter(obj);
-            return key == null ? 0 : key.GetHashCode();
-        }
-    }
-
     protected void Start()
     {
-        Extensions.modulesDict = conf.conf.modules.ToDictionary(m => m.name, m => m.uuid);
-        Extensions.componentsDict = conf.conf.modules.SelectMany(m => m.components).ToDictionary(c => c.name, c => c.uuid);
-        var comparer = new KeyBasedEqualityComparer<ConfXml.Module.Component.Interface, string>(i => i.uuid);
-        Extensions.interfacesDict = conf.conf.modules.SelectMany(m => m.components).SelectMany(c => c.interfaces).Distinct(comparer).ToDictionary(i => i.name, i => i.uuid);
-
         image = SharedPtr.Alloc<Image>().AddTo(subscriptions);
     }
 
@@ -84,7 +63,7 @@ public class SolARTest : AbstractSample
         {
             if (GUILayout.Button("getManager"))
             {
-                xpcfComponentManager = xpcf.getComponentManagerInstance().AddTo(subscriptions);
+                xpcfComponentManager = xpcf_api.getComponentManagerInstance().AddTo(subscriptions);
             }
             GUILayout.Toggle(xpcfComponentManager != null, "OK");
             if (GUILayout.Button("load"))
