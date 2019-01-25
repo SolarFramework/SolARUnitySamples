@@ -145,17 +145,17 @@
       <!--SolARDescriptorsExtractorAKAZE2Opencv-->
     </component>
     <component uuid="2db01f59-9793-4cd5-8e13-b25d0ed5735b">
-      <property name="position" type="Float" value="">
+      <property name="position" type="Float">
         <value>0</value>
         <value>0</value>
         <value>0</value>
       </property>
-      <property name="orientation" type="Float" value="">
+      <property name="orientation" type="Float">
         <value>0.0</value>
         <value>0.0</value>
         <value>0.0</value>
       </property>
-      <property name="size" type="Float" value="">
+      <property name="size" type="Float">
         <value>0.285</value>
         <value>0.197</value>
         <value>0.1</value>
@@ -165,7 +165,7 @@
     <component uuid="cc51d685-9797-4ffd-a9dd-cec4f367fa6a">
       <property name="thickness" type="UnsignedInteger" value="1" />
       <property name="radius" type="UnsignedInteger" value="3" />
-      <property name="color" type="UnsignedInteger" value="">
+      <property name="color" type="UnsignedInteger">
         <value>0</value>
         <value>255</value>
         <value>0</value>

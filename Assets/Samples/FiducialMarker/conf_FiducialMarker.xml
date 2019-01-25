@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <xpcf-registry>
   <module uuid="15e1990b-86b2-445c-8194-0cbe80ede970" name="SolARModuleOpenCV" path="Assets\Standard Assets\SolARUnityPlugin\Plugins" description="OpenCV">
     <component uuid="5B7396F4-A804-4F3C-A0EB-FB1D56042BB4" name="SolARCameraOpencv" description="SolARCameraOpencv">
@@ -106,7 +105,7 @@
       <!--SolARPerspectiveControllerOpencv-->
     </component>
     <component uuid="cc51d685-9797-4ffd-a9dd-cec4f367fa6a" name="contours">
-      <property name="color" type="UnsignedInteger" value="">
+      <property name="color" type="UnsignedInteger">
         <value>128</value>
         <value>128</value>
         <value>128</value>
@@ -121,17 +120,17 @@
       <!--SolAR2DOverlayOpencv-->
     </component>
     <component uuid="2db01f59-9793-4cd5-8e13-b25d0ed5735b">
-      <property name="position" type="Float" value="">
+      <property name="position" type="Float">
         <value>0</value>
         <value>0</value>
         <value>0</value>
       </property>
-      <property name="orientation" type="Float" value="">
+      <property name="orientation" type="Float">
         <value>0.0</value>
         <value>0.0</value>
         <value>0.0</value>
       </property>
-      <property name="size" type="Float" value="">
+      <property name="size" type="Float">
         <value>0.157</value>
         <value>0.157</value>
         <value>0.157</value>
