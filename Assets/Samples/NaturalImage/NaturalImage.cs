@@ -43,7 +43,9 @@ namespace SolAR.Samples
 
             /* instantiate component manager*/
             /* this is needed in dynamic mode */
-            var xpcfComponentManager = xpcf_api.getComponentManagerInstance().AddTo(subscriptions);
+            var xpcfComponentManager = xpcf_api.getComponentManagerInstance();
+            Disposable.Create(xpcfComponentManager.clear).AddTo(subscriptions);
+            xpcfComponentManager.AddTo(subscriptions);
 
             if (xpcfComponentManager.load(conf.path) != XPCFErrorCode._SUCCESS)
             {
@@ -99,17 +101,14 @@ namespace SolAR.Samples
 
             // load marker
             LOG_INFO("LOAD MARKER IMAGE ");
-            ok = marker.loadMarker();
-            ok = marker.getImage(refImage);
+            marker.loadMarker().Check();
+            marker.getImage(refImage).Check();
 
             // NOT WORKING ! Set the size of the box to the size of the natural image marker
             var overlay3D_sizeProp = overlay3DComponent.bindTo<IConfigurable>().getProperty("size");
-            //overlay3D_sizeProp.setFloatingValue(marker.getWidth(), 0);
-            //overlay3D_sizeProp.setFloatingValue(marker.getHeight(), 1);
-            //overlay3D_sizeProp.setFloatingValue(marker.getHeight() / 2.0f, 2);
-            overlay3D_sizeProp.setFloatingValue(1, 0);
-            overlay3D_sizeProp.setFloatingValue(1, 1);
-            overlay3D_sizeProp.setFloatingValue(1 / 2.0f, 2);
+            overlay3D_sizeProp.setFloatingValue(marker.getWidth(), 0);
+            overlay3D_sizeProp.setFloatingValue(marker.getHeight(), 1);
+            overlay3D_sizeProp.setFloatingValue(marker.getHeight() / 2.0f, 2);
 
             // detect keypoints in reference image
             LOG_INFO("DETECT MARKER KEYPOINTS ");
@@ -296,7 +295,6 @@ namespace SolAR.Samples
         Point2DfList refImgCorners;
 
         // to count the average number of processed frames per seconds
-        [SerializeField]
         int count = 0;
         long start;
         long end;

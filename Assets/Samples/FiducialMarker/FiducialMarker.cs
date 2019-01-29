@@ -17,7 +17,6 @@
 //#define VIDEO_INPUT
 #define NDEBUG
 
-using System.Text;
 using SolAR.Api.Display;
 using SolAR.Api.Features;
 using SolAR.Api.Geom;
@@ -44,7 +43,9 @@ namespace SolAR.Samples
 
             /* instantiate component manager*/
             /* this is needed in dynamic mode */
-            xpcfComponentManager = xpcf_api.getComponentManagerInstance().AddTo(subscriptions);
+            xpcfComponentManager = xpcf_api.getComponentManagerInstance();
+            Disposable.Create(xpcfComponentManager.clear).AddTo(subscriptions);
+            xpcfComponentManager.AddTo(subscriptions);
 
             if (xpcfComponentManager.load(conf.path) != XPCFErrorCode._SUCCESS)
             {
@@ -63,11 +64,13 @@ namespace SolAR.Samples
 #endif
             binaryMarker = xpcfComponentManager.create("SolARMarker2DSquaredBinaryOpencv").AddTo(subscriptions).bindTo<IMarker2DSquaredBinary>().AddTo(subscriptions);
 
+#if !NDEBUG
             imageViewer = xpcfComponentManager.create("SolARImageViewerOpencv").AddTo(subscriptions).bindTo<IImageViewer>().AddTo(subscriptions);
             imageViewerGrey = xpcfComponentManager.create("SolARImageViewerOpencv", "grey").AddTo(subscriptions).bindTo<IImageViewer>().AddTo(subscriptions);
             imageViewerBinary = xpcfComponentManager.create("SolARImageViewerOpencv", "binary").AddTo(subscriptions).bindTo<IImageViewer>().AddTo(subscriptions);
             imageViewerContours = xpcfComponentManager.create("SolARImageViewerOpencv", "contours").AddTo(subscriptions).bindTo<IImageViewer>().AddTo(subscriptions);
             imageViewerFilteredContours = xpcfComponentManager.create("SolARImageViewerOpencv", "filteredContours").AddTo(subscriptions).bindTo<IImageViewer>().AddTo(subscriptions);
+#endif
 
             imageFilterBinary = xpcfComponentManager.create("SolARImageFilterBinaryOpencv").AddTo(subscriptions).bindTo<IImageFilter>().AddTo(subscriptions);
             imageConvertor = xpcfComponentManager.create("SolARImageConvertorOpencv").AddTo(subscriptions).bindTo<IImageConvertor>().AddTo(subscriptions);
@@ -82,14 +85,18 @@ namespace SolAR.Samples
             img2worldMapper = xpcfComponentManager.create("SolARImage2WorldMapper4Marker2D").AddTo(subscriptions).bindTo<IImage2WorldMapper>().AddTo(subscriptions);
             PnP = xpcfComponentManager.create("SolARPoseEstimationPnpOpencv").AddTo(subscriptions).bindTo<I3DTransformFinderFrom2D3D>().AddTo(subscriptions);
             overlay3D = xpcfComponentManager.create("SolAR3DOverlayBoxOpencv").AddTo(subscriptions).bindTo<I3DOverlay>().AddTo(subscriptions);
+#if !NDEBUG
             overlay2DContours = xpcfComponentManager.create("SolAR2DOverlayOpencv", "contours").AddTo(subscriptions).bindTo<I2DOverlay>().AddTo(subscriptions);
             overlay2DCircles = xpcfComponentManager.create("SolAR2DOverlayOpencv", "circles").AddTo(subscriptions).bindTo<I2DOverlay>().AddTo(subscriptions);
+#endif
 
             inputImage = SharedPtr.Alloc<Image>().AddTo(subscriptions);
             greyImage = SharedPtr.Alloc<Image>().AddTo(subscriptions);
             binaryImage = SharedPtr.Alloc<Image>().AddTo(subscriptions);
+#if !NDEBUG
             contoursImage = SharedPtr.Alloc<Image>().AddTo(subscriptions);
             filteredContoursImage = SharedPtr.Alloc<Image>().AddTo(subscriptions);
+#endif
 
             contours = new Contour2DfList().AddTo(subscriptions);
             filtered_contours = new Contour2DfList().AddTo(subscriptions);
@@ -105,8 +112,8 @@ namespace SolAR.Samples
             //CamCalibration K;
 
             // components initialisation
-            ok = binaryMarker.loadMarker();
-            ok = patternDescriptorExtractor.extract(binaryMarker.getPattern(), markerPatternDescriptor);
+            binaryMarker.loadMarker().Check();
+            patternDescriptorExtractor.extract(binaryMarker.getPattern(), markerPatternDescriptor).Check();
             var binaryMarkerSize = binaryMarker.getSize();
 
             LOG_DEBUG("Marker pattern:\n {0}", binaryMarker.getPattern().getPatternMatrix());
@@ -117,7 +124,7 @@ namespace SolAR.Samples
             overlay3D_sizeProp.setFloatingValue(binaryMarkerSize.height, 1);
             overlay3D_sizeProp.setFloatingValue(binaryMarkerSize.height / 2.0f, 2);
 
-            patternSize = binaryMarker.getPattern().getSize();
+            var patternSize = binaryMarker.getPattern().getSize();
 
             patternDescriptorExtractor.bindTo<IConfigurable>().getProperty("patternSize").setIntegerValue(patternSize);
             patternReIndexer.bindTo<IConfigurable>().getProperty("sbPatternSize").setIntegerValue(patternSize);
@@ -152,33 +159,33 @@ namespace SolAR.Samples
             count++;
 
             // Convert Image from RGB to grey
-            ok = imageConvertor.convert(inputImage, greyImage, Image.ImageLayout.LAYOUT_GREY);
+            imageConvertor.convert(inputImage, greyImage, Image.ImageLayout.LAYOUT_GREY).Check();
 
             // Convert Image from grey to black and white
-            ok = imageFilterBinary.filter(greyImage, binaryImage);
+            imageFilterBinary.filter(greyImage, binaryImage).Check();
 
             // Extract contours from binary image
-            ok = contoursExtractor.extract(binaryImage, contours);
+            contoursExtractor.extract(binaryImage, contours).Check();
 #if !NDEBUG
             contoursImage = binaryImage.copy();
-            overlay2DContours.drawContours(contours, contoursImage);
+            overlay2DContours.drawContours(contours, contoursImage).Check();
 #endif
             // Filter 4 edges contours to find those candidate for marker contours
-            ok = contoursFilter.filter(contours, filtered_contours);
+            contoursFilter.filter(contours, filtered_contours).Check();
 
 #if !NDEBUG
             filteredContoursImage = binaryImage.copy();
-            overlay2DContours.drawContours(filtered_contours, filteredContoursImage);
+            overlay2DContours.drawContours(filtered_contours, filteredContoursImage).Check();
 #endif
             // Create one warpped and cropped image by contour
-            ok = perspectiveController.correct(binaryImage, filtered_contours, patches);
+            perspectiveController.correct(binaryImage, filtered_contours, patches).Check();
 
             // test if this last image is really a squared binary marker, and if it is the case, extract its descriptor
             if (patternDescriptorExtractor.extract(patches, filtered_contours, recognizedPatternsDescriptors, recognizedContours) == FrameworkReturnCode._SUCCESS)
             {
 
 #if !NDEBUG
-                var std__cout = new StringBuilder();
+                var std__cout = new System.Text.StringBuilder();
                 LOG_DEBUG("Looking for the following descriptor:");
                 /*
                 for (var i = 0; i < markerPatternDescriptor.getNbDescriptors() * markerPatternDescriptor.getDescriptorByteSize(); i++)
@@ -247,7 +254,7 @@ namespace SolAR.Samples
 #endif
 
                     // Reindex the pattern to create two vector of points, the first one corresponding to marker corner, the second one corresponding to the poitsn of the contour
-                    ok = patternReIndexer.reindex(recognizedContours, patternMatches, pattern2DPoints, img2DPoints);
+                    patternReIndexer.reindex(recognizedContours, patternMatches, pattern2DPoints, img2DPoints).Check();
 #if !NDEBUG
                     LOG_DEBUG("2D Matched points :");
                     for (int i = 0; i < img2DPoints.Count; i++)
@@ -257,7 +264,7 @@ namespace SolAR.Samples
                     overlay2DCircles.drawCircles(img2DPoints, inputImage);
 #endif
                     // Compute the 3D position of each corner of the marker
-                    ok = img2worldMapper.map(pattern2DPoints, pattern3DPoints);
+                    img2worldMapper.map(pattern2DPoints, pattern3DPoints).Check();
 #if !NDEBUG
                     std__cout.Append("3D Points position:").AppendLine();
                     for (int i = 0; i < pattern3DPoints.Count; i++)
@@ -266,7 +273,7 @@ namespace SolAR.Samples
                     // Compute the pose of the camera using a Perspective n Points algorithm using only the 4 corners of the marker
                     if (PnP.estimate(img2DPoints, pattern3DPoints, pose) == FrameworkReturnCode._SUCCESS)
                     {
-                        LOG_DEBUG("Camera pose : \n {0}", pose.ToUnity());
+                        //LOG_DEBUG("Camera pose : \n {0}", pose.ToUnity());
                         // Display a 3D box over the marker
                         overlay3D.draw(pose, inputImage);
                     }
@@ -284,13 +291,9 @@ namespace SolAR.Samples
             enabled = (imageViewerBinary.display(binaryImage) == FrameworkReturnCode._SUCCESS);
             enabled = (imageViewerContours.display(contoursImage) == FrameworkReturnCode._SUCCESS);
             enabled = (imageViewerFilteredContours.display(filteredContoursImage) == FrameworkReturnCode._SUCCESS);
-
-            if (count % 25 == 0)
-                UnityEditor.EditorApplication.isPaused = true;
 #endif
 
             inputImage.ToUnity(ref inputTex);
-
         }
 
         protected override void OnDisable()
@@ -306,8 +309,10 @@ namespace SolAR.Samples
         Image inputImage;
         Image greyImage;
         Image binaryImage;
+#if !NDEBUG
         Image contoursImage;
         Image filteredContoursImage;
+#endif
 
         Contour2DfList contours;
         Contour2DfList filtered_contours;
@@ -327,11 +332,13 @@ namespace SolAR.Samples
         new ICamera camera;
         IMarker2DSquaredBinary binaryMarker;
 
+#if !NDEBUG
         IImageViewer imageViewer;
         IImageViewer imageViewerGrey;
         IImageViewer imageViewerBinary;
         IImageViewer imageViewerContours;
         IImageViewer imageViewerFilteredContours;
+#endif
 
         IImageConvertor imageConvertor;
         IImageFilter imageFilterBinary;
@@ -346,16 +353,15 @@ namespace SolAR.Samples
         IImage2WorldMapper img2worldMapper;
         I3DTransformFinderFrom2D3D PnP;
         I3DOverlay overlay3D;
+#if !NDEBUG
         I2DOverlay overlay2DContours;
         I2DOverlay overlay2DCircles;
+#endif
 
         // to count the average number of processed frames per seconds
-        [SerializeField]
         int count = 0;
         long start;
         long end;
-
-        int patternSize;
 
         protected void OnGUI()
         {
