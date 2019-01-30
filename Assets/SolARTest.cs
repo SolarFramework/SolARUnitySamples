@@ -20,8 +20,6 @@ public class SolARTest : AbstractSample
     ICamera iCamera;
     Image image;
 
-    public RuntimeEditor runtimeEditor;
-
     protected void Start()
     {
         image = SharedPtr.Alloc<Image>().AddTo(subscriptions);
@@ -137,7 +135,6 @@ public class SolARTest : AbstractSample
         if (GUILayout.Button("createComponent(UUID)"))
         {
             xpcfComponent = xpcfComponentManager.createComponent(UUID).AddTo(subscriptions);
-            runtimeEditor.Add(xpcfComponent);
         }
         GUILayout.Toggle(xpcfComponent != null, "OK");
         using (new GUILayout.HorizontalScope("IComponentIntrospect", GUI.skin.window))
