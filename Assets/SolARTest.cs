@@ -52,9 +52,9 @@ public class SolARTest : AbstractSample
     {
         if (isOpenUUID = GUILayout.Toggle(isOpenUUID, "UUID"))
         {
-            DictGui("Modules", Extensions.modulesDict);
-            DictGui("Interfaces", Extensions.interfacesDict);
-            DictGui("Components", Extensions.componentsDict);
+            DictGui("Modules", ComponentExtensions.modulesDict);
+            DictGui("Interfaces", ComponentExtensions.interfacesDict);
+            DictGui("Components", ComponentExtensions.componentsDict);
         }
 
         using (new GUILayout.HorizontalScope())
@@ -173,7 +173,7 @@ public class SolARTest : AbstractSample
         {
             if (GUILayout.Button("bindTo<ICamera>"))
             {
-                iCamera = xpcfComponent.bindTo<ICamera>().AddTo(subscriptions);
+                iCamera = xpcfComponent.BindTo<ICamera>().AddTo(subscriptions);
             }
             //if (GUILayout.Button("queryInterface TODO"))
             //{

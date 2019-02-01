@@ -60,9 +60,9 @@ namespace SolAR.Samples
 #if VIDEO_INPUT
             camera = xpcfComponentManager.create("SolARVideoAsCameraOpencv").AddTo(subscriptions).bindTo<ICamera>().AddTo(subscriptions);
 #else
-            camera = xpcfComponentManager.create("SolARCameraOpencv").AddTo(subscriptions).bindTo<ICamera>().AddTo(subscriptions);
+            camera = xpcfComponentManager.Create("SolARCameraOpencv").AddTo(subscriptions).BindTo<ICamera>().AddTo(subscriptions);
 #endif
-            binaryMarker = xpcfComponentManager.create("SolARMarker2DSquaredBinaryOpencv").AddTo(subscriptions).bindTo<IMarker2DSquaredBinary>().AddTo(subscriptions);
+            binaryMarker = xpcfComponentManager.Create("SolARMarker2DSquaredBinaryOpencv").AddTo(subscriptions).BindTo<IMarker2DSquaredBinary>().AddTo(subscriptions);
 
 #if !NDEBUG
             imageViewer = xpcfComponentManager.create("SolARImageViewerOpencv").AddTo(subscriptions).bindTo<IImageViewer>().AddTo(subscriptions);
@@ -72,19 +72,19 @@ namespace SolAR.Samples
             imageViewerFilteredContours = xpcfComponentManager.create("SolARImageViewerOpencv", "filteredContours").AddTo(subscriptions).bindTo<IImageViewer>().AddTo(subscriptions);
 #endif
 
-            imageFilterBinary = xpcfComponentManager.create("SolARImageFilterBinaryOpencv").AddTo(subscriptions).bindTo<IImageFilter>().AddTo(subscriptions);
-            imageConvertor = xpcfComponentManager.create("SolARImageConvertorOpencv").AddTo(subscriptions).bindTo<IImageConvertor>().AddTo(subscriptions);
-            contoursExtractor = xpcfComponentManager.create("SolARContoursExtractorOpencv").AddTo(subscriptions).bindTo<IContoursExtractor>().AddTo(subscriptions);
-            contoursFilter = xpcfComponentManager.create("SolARContoursFilterBinaryMarkerOpencv").AddTo(subscriptions).bindTo<IContoursFilter>().AddTo(subscriptions);
-            perspectiveController = xpcfComponentManager.create("SolARPerspectiveControllerOpencv").AddTo(subscriptions).bindTo<IPerspectiveController>().AddTo(subscriptions);
-            patternDescriptorExtractor = xpcfComponentManager.create("SolARDescriptorsExtractorSBPatternOpencv").AddTo(subscriptions).bindTo<IDescriptorsExtractorSBPattern>().AddTo(subscriptions);
+            imageFilterBinary = xpcfComponentManager.Create("SolARImageFilterBinaryOpencv").AddTo(subscriptions).BindTo<IImageFilter>().AddTo(subscriptions);
+            imageConvertor = xpcfComponentManager.Create("SolARImageConvertorOpencv").AddTo(subscriptions).BindTo<IImageConvertor>().AddTo(subscriptions);
+            contoursExtractor = xpcfComponentManager.Create("SolARContoursExtractorOpencv").AddTo(subscriptions).BindTo<IContoursExtractor>().AddTo(subscriptions);
+            contoursFilter = xpcfComponentManager.Create("SolARContoursFilterBinaryMarkerOpencv").AddTo(subscriptions).BindTo<IContoursFilter>().AddTo(subscriptions);
+            perspectiveController = xpcfComponentManager.Create("SolARPerspectiveControllerOpencv").AddTo(subscriptions).BindTo<IPerspectiveController>().AddTo(subscriptions);
+            patternDescriptorExtractor = xpcfComponentManager.Create("SolARDescriptorsExtractorSBPatternOpencv").AddTo(subscriptions).BindTo<IDescriptorsExtractorSBPattern>().AddTo(subscriptions);
 
-            patternMatcher = xpcfComponentManager.create("SolARDescriptorMatcherRadiusOpencv").AddTo(subscriptions).bindTo<IDescriptorMatcher>().AddTo(subscriptions);
-            patternReIndexer = xpcfComponentManager.create("SolARSBPatternReIndexer").AddTo(subscriptions).bindTo<ISBPatternReIndexer>().AddTo(subscriptions);
+            patternMatcher = xpcfComponentManager.Create("SolARDescriptorMatcherRadiusOpencv").AddTo(subscriptions).BindTo<IDescriptorMatcher>().AddTo(subscriptions);
+            patternReIndexer = xpcfComponentManager.Create("SolARSBPatternReIndexer").AddTo(subscriptions).BindTo<ISBPatternReIndexer>().AddTo(subscriptions);
 
-            img2worldMapper = xpcfComponentManager.create("SolARImage2WorldMapper4Marker2D").AddTo(subscriptions).bindTo<IImage2WorldMapper>().AddTo(subscriptions);
-            PnP = xpcfComponentManager.create("SolARPoseEstimationPnpOpencv").AddTo(subscriptions).bindTo<I3DTransformFinderFrom2D3D>().AddTo(subscriptions);
-            overlay3D = xpcfComponentManager.create("SolAR3DOverlayBoxOpencv").AddTo(subscriptions).bindTo<I3DOverlay>().AddTo(subscriptions);
+            img2worldMapper = xpcfComponentManager.Create("SolARImage2WorldMapper4Marker2D").AddTo(subscriptions).BindTo<IImage2WorldMapper>().AddTo(subscriptions);
+            PnP = xpcfComponentManager.Create("SolARPoseEstimationPnpOpencv").AddTo(subscriptions).BindTo<I3DTransformFinderFrom2D3D>().AddTo(subscriptions);
+            overlay3D = xpcfComponentManager.Create("SolAR3DOverlayBoxOpencv").AddTo(subscriptions).BindTo<I3DOverlay>().AddTo(subscriptions);
 #if !NDEBUG
             overlay2DContours = xpcfComponentManager.create("SolAR2DOverlayOpencv", "contours").AddTo(subscriptions).bindTo<I2DOverlay>().AddTo(subscriptions);
             overlay2DCircles = xpcfComponentManager.create("SolAR2DOverlayOpencv", "circles").AddTo(subscriptions).bindTo<I2DOverlay>().AddTo(subscriptions);
@@ -119,18 +119,18 @@ namespace SolAR.Samples
             LOG_DEBUG("Marker pattern:\n {0}", binaryMarker.getPattern().getPatternMatrix());
 
             // Set the size of the box to display according to the marker size in world unit
-            var overlay3D_sizeProp = overlay3D.bindTo<IConfigurable>().getProperty("size");
+            var overlay3D_sizeProp = overlay3D.BindTo<IConfigurable>().getProperty("size");
             overlay3D_sizeProp.setFloatingValue(binaryMarkerSize.width, 0);
             overlay3D_sizeProp.setFloatingValue(binaryMarkerSize.height, 1);
             overlay3D_sizeProp.setFloatingValue(binaryMarkerSize.height / 2.0f, 2);
 
             var patternSize = binaryMarker.getPattern().getSize();
 
-            patternDescriptorExtractor.bindTo<IConfigurable>().getProperty("patternSize").setIntegerValue(patternSize);
-            patternReIndexer.bindTo<IConfigurable>().getProperty("sbPatternSize").setIntegerValue(patternSize);
+            patternDescriptorExtractor.BindTo<IConfigurable>().getProperty("patternSize").setIntegerValue(patternSize);
+            patternReIndexer.BindTo<IConfigurable>().getProperty("sbPatternSize").setIntegerValue(patternSize);
 
             // NOT WORKING ! initialize image mapper with the reference image size and marker size
-            var img2worldMapperConf = img2worldMapper.bindTo<IConfigurable>();
+            var img2worldMapperConf = img2worldMapper.BindTo<IConfigurable>();
             img2worldMapperConf.getProperty("digitalWidth").setIntegerValue(patternSize);
             img2worldMapperConf.getProperty("digitalHeight").setIntegerValue(patternSize);
             img2worldMapperConf.getProperty("worldWidth").setFloatingValue(binaryMarkerSize.width);

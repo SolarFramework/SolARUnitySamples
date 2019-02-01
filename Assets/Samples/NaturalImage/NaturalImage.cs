@@ -57,24 +57,24 @@ namespace SolAR.Samples
             // declare and create components
             LOG_INFO("Start creating components");
 
-            camera = xpcfComponentManager.create("SolARCameraOpencv").bindTo<ICamera>().AddTo(subscriptions);
-            imageViewerKeypoints = xpcfComponentManager.create("SolARImageViewerOpencv", "keypoints").bindTo<IImageViewer>().AddTo(subscriptions);
-            imageViewerResult = xpcfComponentManager.create("SolARImageViewerOpencv").bindTo<IImageViewer>().AddTo(subscriptions);
-            marker = xpcfComponentManager.create("SolARMarker2DNaturalImageOpencv").bindTo<IMarker2DNaturalImage>().AddTo(subscriptions);
-            kpDetector = xpcfComponentManager.create("SolARKeypointDetectorOpencv").bindTo<IKeypointDetector>().AddTo(subscriptions);
-            matcher = xpcfComponentManager.create("SolARDescriptorMatcherKNNOpencv").bindTo<IDescriptorMatcher>().AddTo(subscriptions);
-            basicMatchesFilter = xpcfComponentManager.create("SolARBasicMatchesFilter").bindTo<IMatchesFilter>().AddTo(subscriptions);
-            geomMatchesFilter = xpcfComponentManager.create("SolARGeometricMatchesFilterOpencv").bindTo<IMatchesFilter>().AddTo(subscriptions);
-            homographyEstimation = xpcfComponentManager.create("SolARHomographyEstimationOpencv").bindTo<I2DTransformFinder>().AddTo(subscriptions);
-            homographyValidation = xpcfComponentManager.create("SolARHomographyValidation").bindTo<IHomographyValidation>().AddTo(subscriptions);
-            keypointsReindexer = xpcfComponentManager.create("SolARKeypointsReIndexer").bindTo<IKeypointsReIndexer>().AddTo(subscriptions);
-            poseEstimation = xpcfComponentManager.create("SolARPoseEstimationPnpOpencv").bindTo<I3DTransformFinderFrom2D3D>().AddTo(subscriptions);
+            camera = xpcfComponentManager.Create("SolARCameraOpencv").BindTo<ICamera>().AddTo(subscriptions);
+            imageViewerKeypoints = xpcfComponentManager.Create("SolARImageViewerOpencv", "keypoints").BindTo<IImageViewer>().AddTo(subscriptions);
+            imageViewerResult = xpcfComponentManager.Create("SolARImageViewerOpencv").BindTo<IImageViewer>().AddTo(subscriptions);
+            marker = xpcfComponentManager.Create("SolARMarker2DNaturalImageOpencv").BindTo<IMarker2DNaturalImage>().AddTo(subscriptions);
+            kpDetector = xpcfComponentManager.Create("SolARKeypointDetectorOpencv").BindTo<IKeypointDetector>().AddTo(subscriptions);
+            matcher = xpcfComponentManager.Create("SolARDescriptorMatcherKNNOpencv").BindTo<IDescriptorMatcher>().AddTo(subscriptions);
+            basicMatchesFilter = xpcfComponentManager.Create("SolARBasicMatchesFilter").BindTo<IMatchesFilter>().AddTo(subscriptions);
+            geomMatchesFilter = xpcfComponentManager.Create("SolARGeometricMatchesFilterOpencv").BindTo<IMatchesFilter>().AddTo(subscriptions);
+            homographyEstimation = xpcfComponentManager.Create("SolARHomographyEstimationOpencv").BindTo<I2DTransformFinder>().AddTo(subscriptions);
+            homographyValidation = xpcfComponentManager.Create("SolARHomographyValidation").BindTo<IHomographyValidation>().AddTo(subscriptions);
+            keypointsReindexer = xpcfComponentManager.Create("SolARKeypointsReIndexer").BindTo<IKeypointsReIndexer>().AddTo(subscriptions);
+            poseEstimation = xpcfComponentManager.Create("SolARPoseEstimationPnpOpencv").BindTo<I3DTransformFinderFrom2D3D>().AddTo(subscriptions);
             //poseEstimation =xpcfComponentManager.create("SolARPoseEstimationPnpEPFL").bindTo<I3DTransformFinderFrom2D3D>().AddTo(subscriptions);
-            overlay2DComponent = xpcfComponentManager.create("SolAR2DOverlayOpencv").bindTo<I2DOverlay>().AddTo(subscriptions);
-            overlay3DComponent = xpcfComponentManager.create("SolAR3DOverlayBoxOpencv").bindTo<I3DOverlay>().AddTo(subscriptions);
-            img_mapper = xpcfComponentManager.create("SolARImage2WorldMapper4Marker2D").bindTo<IImage2WorldMapper>().AddTo(subscriptions);
-            transform2D = xpcfComponentManager.create("SolAR2DTransform").bindTo<I2DTransform>().AddTo(subscriptions);
-            descriptorExtractor = xpcfComponentManager.create("SolARDescriptorsExtractorAKAZE2Opencv").bindTo<IDescriptorsExtractor>().AddTo(subscriptions);
+            overlay2DComponent = xpcfComponentManager.Create("SolAR2DOverlayOpencv").BindTo<I2DOverlay>().AddTo(subscriptions);
+            overlay3DComponent = xpcfComponentManager.Create("SolAR3DOverlayBoxOpencv").BindTo<I3DOverlay>().AddTo(subscriptions);
+            img_mapper = xpcfComponentManager.Create("SolARImage2WorldMapper4Marker2D").BindTo<IImage2WorldMapper>().AddTo(subscriptions);
+            transform2D = xpcfComponentManager.Create("SolAR2DTransform").BindTo<I2DTransform>().AddTo(subscriptions);
+            descriptorExtractor = xpcfComponentManager.Create("SolARDescriptorsExtractorAKAZE2Opencv").BindTo<IDescriptorsExtractor>().AddTo(subscriptions);
 
             /* in dynamic mode, we need to check that components are well created*/
             /* this is needed in dynamic mode */
@@ -105,7 +105,7 @@ namespace SolAR.Samples
             marker.getImage(refImage).Check();
 
             // NOT WORKING ! Set the size of the box to the size of the natural image marker
-            var overlay3D_sizeProp = overlay3DComponent.bindTo<IConfigurable>().getProperty("size");
+            var overlay3D_sizeProp = overlay3DComponent.BindTo<IConfigurable>().getProperty("size");
             overlay3D_sizeProp.setFloatingValue(marker.getWidth(), 0);
             overlay3D_sizeProp.setFloatingValue(marker.getHeight(), 1);
             overlay3D_sizeProp.setFloatingValue(marker.getHeight() / 2.0f, 2);
@@ -133,7 +133,7 @@ namespace SolAR.Samples
             poseEstimation.setCameraParameters(camera.getIntrinsicsParameters(), camera.getDistorsionParameters());
 
             // initialize image mapper with the reference image size and marker size
-            var img_mapper_config = img_mapper.bindTo<IConfigurable>().AddTo(subscriptions);
+            var img_mapper_config = img_mapper.BindTo<IConfigurable>().AddTo(subscriptions);
             var refSize = refImage.getSize();
             var mkSize = marker.getSize();
             img_mapper_config.getProperty("digitalWidth").setIntegerValue((int)refSize.width);
