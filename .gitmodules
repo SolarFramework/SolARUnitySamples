@@ -1,4 +1,4 @@
 [submodule "Assets/Standard Assets/SolARUnityPlugin"]
 	path = Assets/Standard Assets/SolARUnityPlugin
-	url = git@github.com:SolarFramework/SolARUnityFullWrapper.git
+	url = https://github.com/SolarFramework/SolARUnityFullWrapper.git
 	branch = develop
