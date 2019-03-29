@@ -244,7 +244,7 @@ namespace SolAR.Samples
 #endif
 
                 // From extracted squared binary pattern, match the one corresponding to the squared binary marker
-                if (patternMatcher.match(markerPatternDescriptor, recognizedPatternsDescriptors, patternMatches) == DescriptorMatcherRetCode.DESCRIPTORS_MATCHER_OK)
+                if (patternMatcher.match(markerPatternDescriptor, recognizedPatternsDescriptors, patternMatches) == Api.Features.RetCode.DESCRIPTORS_MATCHER_OK)
                 {
 #if !NDEBUG
                     std__cout.Append("Matches :").AppendLine();

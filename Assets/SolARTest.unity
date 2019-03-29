@@ -50,12 +50,11 @@ LightmapSettings:
     m_BounceScale: 1
     m_IndirectOutputScale: 1
     m_AlbedoBoost: 1
-    m_TemporalCoherenceThreshold: 1
     m_EnvironmentLightingMode: 0
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 10
+    serializedVersion: 12
     m_Resolution: 2
     m_BakeResolution: 40
     m_AtlasSize: 1024
@@ -63,6 +62,7 @@ LightmapSettings:
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
     m_CompAOExponentDirect: 0
+    m_ExtractAmbientOcclusion: 0
     m_Padding: 2
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
@@ -77,10 +77,16 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
+    m_PVREnvironmentSampleCount: 500
+    m_PVREnvironmentReferencePointCount: 2048
+    m_PVRFilteringMode: 2
+    m_PVRDenoiserTypeDirect: 0
+    m_PVRDenoiserTypeIndirect: 0
+    m_PVRDenoiserTypeAO: 0
     m_PVRFilterTypeDirect: 0
     m_PVRFilterTypeIndirect: 0
     m_PVRFilterTypeAO: 0
-    m_PVRFilteringMode: 1
+    m_PVREnvironmentMIS: 0
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
@@ -89,6 +95,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
+    m_ExportTrainingData: 0
+    m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -117,7 +125,8 @@ NavMeshSettings:
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
   - component: {fileID: 221382100}
@@ -136,10 +145,12 @@ GameObject:
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 221382095}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 9d2959e87b80baf4b8c20b0836ecf308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -151,7 +162,8 @@ MonoBehaviour:
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 221382095}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -163,7 +175,8 @@ SphereCollider:
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 221382095}
   m_Enabled: 1
   m_CastShadows: 1
@@ -173,6 +186,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 5ddf7cebd15909b4fa1f2e78a2189b13, type: 2}
   m_StaticBatchInfo:
@@ -182,6 +196,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -198,14 +213,16 @@ MeshRenderer:
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 221382095}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &221382100
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 221382095}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.25}
@@ -218,7 +235,8 @@ Transform:
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
   - component: {fileID: 306339001}
@@ -234,15 +252,17 @@ GameObject:
 Light:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 306338999}
   m_Enabled: 1
-  serializedVersion: 8
+  serializedVersion: 9
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -259,6 +279,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
@@ -271,7 +292,8 @@ Light:
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 306338999}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 0, y: 3, z: 0}
@@ -284,7 +306,8 @@ Transform:
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
   - component: {fileID: 571934192}
@@ -303,20 +326,24 @@ GameObject:
 AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 571934189}
   m_Enabled: 1
 --- !u!20 &571934191
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 571934189}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
   m_FocalLength: 50
@@ -350,7 +377,8 @@ Camera:
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 571934189}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -363,10 +391,12 @@ Transform:
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 571934189}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cd0fff3eb49157d449c048665dc2247b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -375,10 +405,12 @@ MonoBehaviour:
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 571934189}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 9fb04ee474d4bbb4ebd0024af3c80680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -387,7 +419,8 @@ MonoBehaviour:
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
   - component: {fileID: 760057295}
@@ -403,10 +436,12 @@ GameObject:
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 760057293}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: b3741ea27f740804e9fc6e05f7d23e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -595,90 +630,112 @@ MonoBehaviour:
         - type: SolARCameraOpencv
           uuid: 5B7396F4-A804-4F3C-A0EB-FB1D56042BB4
           name: 
+          description: 
           properties:
           - name: calibrationFile
             type: string
             value: camera_calibration.yml
+            description: 
             values: []
           - name: deviceID
             type: UnsignedInteger
             value: 0
+            description: 
             values: []
         - type: SolARVideoAsCameraOpencv
           uuid: fa4a780a-9720-11e8-9eb6-529269fb1459
           name: 
+          description: 
           properties:
           - name: calibrationFile
             type: string
             value: camera_calibration.yml
+            description: 
             values: []
           - name: videoPath
             type: string
             value: video.mp4
+            description: 
             values: []
         - type: SolARMarker2DSquaredBinaryOpencv
           uuid: 5d2b8da9-528e-4e5e-96c1-f883edcf3b1c
           name: 
+          description: 
           properties:
           - name: filePath
             type: string
             value: fiducialMarker.yml
+            description: 
             values: []
         - type: SolARImageFilterBinaryOpencv
           uuid: e5fd7e9a-fcae-4f86-bfc7-ea8584c298b2
           name: 
+          description: 
           properties:
           - name: min
             type: Integer
             value: -1
+            description: 
             values: []
           - name: max
             type: Integer
             value: 255
+            description: 
             values: []
         - type: SolARContoursExtractorOpencv
           uuid: 6acf8de2-cc63-11e7-abc4-cec278b6b50a
           name: 
+          description: 
           properties:
           - name: minContourEdges
             type: Integer
             value: 4
+            description: 
             values: []
         - type: SolARContoursFilterBinaryMarkerOpencv
           uuid: 4309dcc6-cc73-11e7-abc4-cec278b6b50a
           name: 
+          description: 
           properties:
           - name: epsilon
             type: Float
             value: 0.05
+            description: 
             values: []
           - name: minContourLength
             type: Float
             value: 20.0
+            description: 
             values: []
           - name: minDistanceBetweenContourCorners
             type: Float
             value: 10.0
+            description: 
             values: []
         - type: SolARPerspectiveControllerOpencv
           uuid: 9c960f2a-cd6e-11e7-abc4-cec278b6b50a
           name: 
+          description: 
           properties:
           - name: outputImageWidth
             type: Integer
             value: 640
+            description: 
             values: []
           - name: outputImageHeight
             type: Integer
             value: 480
+            description: 
             values: []
         - type: SolAR2DOverlayOpencv
           uuid: cc51d685-9797-4ffd-a9dd-cec4f367fa6a
           name: contours
+          description: 
           properties:
           - name: color
             type: UnsignedInteger
             value: 
+            description: 
             values:
             - 128
             - 128
@@ -686,30 +743,37 @@ MonoBehaviour:
           - name: thickness
             type: UnsignedInteger
             value: 3
+            description: 
             values: []
         - type: SolAR2DOverlayOpencv
           uuid: cc51d685-9797-4ffd-a9dd-cec4f367fa6a
           name: circles
+          description: 
           properties:
           - name: thickness
             type: UnsignedInteger
             value: 3
+            description: 
             values: []
           - name: radius
             type: UnsignedInteger
             value: 6
+            description: 
             values: []
           - name: randomColor
             type: UnsignedInteger
             value: 1
+            description: 
             values: []
         - type: SolAR3DOverlayBoxOpencv
           uuid: 2db01f59-9793-4cd5-8e13-b25d0ed5735b
           name: 
+          description: 
           properties:
           - name: position
             type: Float
             value: 
+            description: 
             values:
             - 0
             - 0
@@ -717,6 +781,7 @@ MonoBehaviour:
           - name: orientation
             type: Float
             value: 
+            description: 
             values:
             - 0.0
             - 0.0
@@ -724,6 +789,7 @@ MonoBehaviour:
           - name: size
             type: Float
             value: 
+            description: 
             values:
             - 0.157
             - 0.157
@@ -731,102 +797,127 @@ MonoBehaviour:
         - type: SolARImageViewerOpencv
           uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
           name: 
+          description: 
           properties:
           - name: title
             type: string
             value: Original Image
+            description: 
             values: []
           - name: exitKey
             type: Integer
             value: 27
+            description: 
             values: []
           - name: width
             type: Integer
             value: 0
+            description: 
             values: []
           - name: height
             type: Integer
             value: 0
+            description: 
             values: []
         - type: SolARImageViewerOpencv
           uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
           name: grey
+          description: 
           properties:
           - name: title
             type: string
             value: Grey Image
+            description: 
             values: []
           - name: exitKey
             type: Integer
             value: 27
+            description: 
             values: []
           - name: width
             type: Integer
             value: 0
+            description: 
             values: []
           - name: height
             type: Integer
             value: 0
+            description: 
             values: []
         - type: SolARImageViewerOpencv
           uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
           name: binary
+          description: 
           properties:
           - name: title
             type: string
             value: Binary Image
+            description: 
             values: []
           - name: exitKey
             type: Integer
             value: 27
+            description: 
             values: []
           - name: width
             type: Integer
             value: 0
+            description: 
             values: []
           - name: height
             type: Integer
             value: 0
+            description: 
             values: []
         - type: SolARImageViewerOpencv
           uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
           name: contours
+          description: 
           properties:
           - name: title
             type: string
             value: Contours Image
+            description: 
             values: []
           - name: exitKey
             type: Integer
             value: 27
+            description: 
             values: []
           - name: width
             type: Integer
             value: 0
+            description: 
             values: []
           - name: height
             type: Integer
             value: 0
+            description: 
             values: []
         - type: SolARImageViewerOpencv
           uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
           name: filteredContours
+          description: 
           properties:
           - name: title
             type: string
             value: Filtered Contours Image
+            description: 
             values: []
           - name: exitKey
             type: Integer
             value: 27
+            description: 
             values: []
           - name: width
             type: Integer
             value: 0
+            description: 
             values: []
           - name: height
             type: Integer
             value: 0
+            description: 
             values: []
   source: 0
   display: 2
@@ -836,7 +927,8 @@ MonoBehaviour:
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 760057293}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -849,7 +941,8 @@ Transform:
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
   - component: {fileID: 796315793}
@@ -865,10 +958,12 @@ GameObject:
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 796315791}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 048dbc42c2c0e9e4abc39608cf0e2034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -1057,90 +1152,112 @@ MonoBehaviour:
         - type: SolARCameraOpencv
           uuid: 5B7396F4-A804-4F3C-A0EB-FB1D56042BB4
           name: 
+          description: 
           properties:
           - name: calibrationFile
             type: string
             value: camera_calibration.yml
+            description: 
             values: []
           - name: deviceID
             type: UnsignedInteger
             value: 0
+            description: 
             values: []
         - type: SolARVideoAsCameraOpencv
           uuid: fa4a780a-9720-11e8-9eb6-529269fb1459
           name: 
+          description: 
           properties:
           - name: calibrationFile
             type: string
             value: camera_calibration.yml
+            description: 
             values: []
           - name: videoPath
             type: string
             value: video.mp4
+            description: 
             values: []
         - type: SolARMarker2DSquaredBinaryOpencv
           uuid: 5d2b8da9-528e-4e5e-96c1-f883edcf3b1c
           name: 
+          description: 
           properties:
           - name: filePath
             type: string
             value: fiducialMarker.yml
+            description: 
             values: []
         - type: SolARImageFilterBinaryOpencv
           uuid: e5fd7e9a-fcae-4f86-bfc7-ea8584c298b2
           name: 
+          description: 
           properties:
           - name: min
             type: Integer
             value: -1
+            description: 
             values: []
           - name: max
             type: Integer
             value: 255
+            description: 
             values: []
         - type: SolARContoursExtractorOpencv
           uuid: 6acf8de2-cc63-11e7-abc4-cec278b6b50a
           name: 
+          description: 
           properties:
           - name: minContourEdges
             type: Integer
             value: 4
+            description: 
             values: []
         - type: SolARContoursFilterBinaryMarkerOpencv
           uuid: 4309dcc6-cc73-11e7-abc4-cec278b6b50a
           name: 
+          description: 
           properties:
           - name: epsilon
             type: Float
             value: 0.05
+            description: 
             values: []
           - name: minContourLength
             type: Float
             value: 20.0
+            description: 
             values: []
           - name: minDistanceBetweenContourCorners
             type: Float
             value: 10.0
+            description: 
             values: []
         - type: SolARPerspectiveControllerOpencv
           uuid: 9c960f2a-cd6e-11e7-abc4-cec278b6b50a
           name: 
+          description: 
           properties:
           - name: outputImageWidth
             type: Integer
             value: 640
+            description: 
             values: []
           - name: outputImageHeight
             type: Integer
             value: 480
+            description: 
             values: []
         - type: SolAR2DOverlayOpencv
           uuid: cc51d685-9797-4ffd-a9dd-cec4f367fa6a
           name: contours
+          description: 
           properties:
           - name: color
             type: UnsignedInteger
             value: 
+            description: 
             values:
             - 128
             - 128
@@ -1148,30 +1265,37 @@ MonoBehaviour:
           - name: thickness
             type: UnsignedInteger
             value: 3
+            description: 
             values: []
         - type: SolAR2DOverlayOpencv
           uuid: cc51d685-9797-4ffd-a9dd-cec4f367fa6a
           name: circles
+          description: 
           properties:
           - name: thickness
             type: UnsignedInteger
             value: 3
+            description: 
             values: []
           - name: radius
             type: UnsignedInteger
             value: 6
+            description: 
             values: []
           - name: randomColor
             type: UnsignedInteger
             value: 1
+            description: 
             values: []
         - type: SolAR3DOverlayBoxOpencv
           uuid: 2db01f59-9793-4cd5-8e13-b25d0ed5735b
           name: 
+          description: 
           properties:
           - name: position
             type: Float
             value: 
+            description: 
             values:
             - 0
             - 0
@@ -1179,6 +1303,7 @@ MonoBehaviour:
           - name: orientation
             type: Float
             value: 
+            description: 
             values:
             - 0.0
             - 0.0
@@ -1186,6 +1311,7 @@ MonoBehaviour:
           - name: size
             type: Float
             value: 
+            description: 
             values:
             - 0.157
             - 0.157
@@ -1193,109 +1319,135 @@ MonoBehaviour:
         - type: SolARImageViewerOpencv
           uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
           name: 
+          description: 
           properties:
           - name: title
             type: string
             value: Original Image
+            description: 
             values: []
           - name: exitKey
             type: Integer
             value: 27
+            description: 
             values: []
           - name: width
             type: Integer
             value: 0
+            description: 
             values: []
           - name: height
             type: Integer
             value: 0
+            description: 
             values: []
         - type: SolARImageViewerOpencv
           uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
           name: grey
+          description: 
           properties:
           - name: title
             type: string
             value: Grey Image
+            description: 
             values: []
           - name: exitKey
             type: Integer
             value: 27
+            description: 
             values: []
           - name: width
             type: Integer
             value: 0
+            description: 
             values: []
           - name: height
             type: Integer
             value: 0
+            description: 
             values: []
         - type: SolARImageViewerOpencv
           uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
           name: binary
+          description: 
           properties:
           - name: title
             type: string
             value: Binary Image
+            description: 
             values: []
           - name: exitKey
             type: Integer
             value: 27
+            description: 
             values: []
           - name: width
             type: Integer
             value: 0
+            description: 
             values: []
           - name: height
             type: Integer
             value: 0
+            description: 
             values: []
         - type: SolARImageViewerOpencv
           uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
           name: contours
+          description: 
           properties:
           - name: title
             type: string
             value: Contours Image
+            description: 
             values: []
           - name: exitKey
             type: Integer
             value: 27
+            description: 
             values: []
           - name: width
             type: Integer
             value: 0
+            description: 
             values: []
           - name: height
             type: Integer
             value: 0
+            description: 
             values: []
         - type: SolARImageViewerOpencv
           uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
           name: filteredContours
+          description: 
           properties:
           - name: title
             type: string
             value: Filtered Contours Image
+            description: 
             values: []
           - name: exitKey
             type: Integer
             value: 27
+            description: 
             values: []
           - name: width
             type: Integer
             value: 0
+            description: 
             values: []
           - name: height
             type: Integer
             value: 0
+            description: 
             values: []
   uuid: 5B7396F4-A804-4F3C-A0EB-FB1D56042BB4
 --- !u!4 &796315793
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 796315791}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -1308,7 +1460,8 @@ Transform:
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
   - component: {fileID: 981537310}
@@ -1323,7 +1476,8 @@ GameObject:
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 981537309}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -1340,7 +1494,8 @@ Transform:
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1096780299}
@@ -1356,10 +1511,12 @@ GameObject:
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1096780297}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: dbdeeba2e3cab9f41b859ae8ea36c717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -1368,7 +1525,8 @@ MonoBehaviour:
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1096780297}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -1381,7 +1539,8 @@ Transform:
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1369030440}
@@ -1399,7 +1558,8 @@ GameObject:
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369030436}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -1407,13 +1567,13 @@ MeshCollider:
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
-  m_SkinWidth: 0.01
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1369030438
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369030436}
   m_Enabled: 1
   m_CastShadows: 1
@@ -1423,6 +1583,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
   m_Materials:
   - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -1432,6 +1593,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1448,14 +1610,16 @@ MeshRenderer:
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369030436}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1369030440
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369030436}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -1469,7 +1633,8 @@ Transform:
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1446960885}
@@ -1485,10 +1650,12 @@ GameObject:
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1446960883}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: efeaae34600f1c242aeab0335a819141, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -1727,134 +1894,167 @@ MonoBehaviour:
         - type: SolARCameraOpencv
           uuid: 5B7396F4-A804-4F3C-A0EB-FB1D56042BB4
           name: 
+          description: 
           properties:
           - name: calibrationFile
             type: string
             value: camera_calibration.yml
+            description: 
             values: []
           - name: deviceID
             type: UnsignedInteger
             value: 0
+            description: 
             values: []
         - type: SolARVideoAsCameraOpencv
           uuid: fa4a780a-9720-11e8-9eb6-529269fb1459
           name: 
+          description: 
           properties:
           - name: calibrationFile
             type: string
             value: camera_calibration.yml
+            description: 
             values: []
           - name: videoPath
             type: string
             value: video.mp4
+            description: 
             values: []
         - type: SolARMarker2DNaturalImageOpencv
           uuid: efcdb590-c570-11e7-abc4-cec278b6b50a
           name: 
+          description: 
           properties:
           - name: filePath
             type: string
             value: grafMarker.yml
+            description: 
             values: []
         - type: SolARKeypointDetectorOpencv
           uuid: e81c7e4e-7da6-476a-8eba-078b43071272
           name: 
+          description: 
           properties:
           - name: type
             type: string
             value: AKAZE2
+            description: 
             values: []
           - name: imageRatio
             type: Float
             value: 0.5
+            description: 
             values: []
           - name: nbDescriptors
             type: Integer
             value: 1000
+            description: 
             values: []
         - type: SolARDescriptorMatcherKNNOpencv
           uuid: 7823dac8-1597-41cf-bdef-59aa22f3d40a
           name: 
+          description: 
           properties:
           - name: distanceRatio
             type: Float
             value: 0.75
+            description: 
             values: []
         - type: SolARGeometricMatchesFilterOpencv
           uuid: 3731691e-2c4c-4d37-a2ce-06d1918f8d41
           name: 
+          description: 
           properties:
           - name: m_confidenceLevel
             type: Double
             value: 0.99
+            description: 
             values: []
           - name: m_outlierDistanceRatio
             type: Double
             value: 0.006
+            description: 
             values: []
         - type: SolARHomographyEstimationOpencv
           uuid: fb9dac20-2a44-44b2-aa42-2871eec31427
           name: 
+          description: 
           properties:
           - name: ransacReprojThreshold
             type: Double
             value: 8.0
+            description: 
             values: []
         - type: <color=red><b>???</b></color>
           uuid: 31188e79-6bd5-43df-9633-6d6c5d7afb5c
           name: 
+          description: 
           properties:
           - name: oppositeSideRatio
             type: Float
             value: 0.5
+            description: 
             values: []
           - name: surfaceRatio
             type: Float
             value: 0.15
+            description: 
             values: []
           - name: maxOppositeDotProduct
             type: Float
             value: 0.9
+            description: 
             values: []
         - type: SolARPoseEstimationPnpOpencv
           uuid: 0753ade1-7932-4e29-a71c-66155e309a53
           name: 
+          description: 
           properties:
           - name: iterationsCount
             type: Integer
             value: 1000
+            description: 
             values: []
           - name: reprojError
             type: Float
             value: 4.0
+            description: 
             values: []
           - name: confidence
             type: Float
             value: 0.99
+            description: 
             values: []
         - type: SolARPoseEstimationPnpEPFL
           uuid: a38edf79-f0dc-45ca-92fc-2b336fceedf9
           name: 
+          description: 
           properties:
           - name: maxNumberCorrespondences
             type: Integer
             value: 200
+            description: 
             values: []
         - type: SolARDescriptorsExtractorAKAZE2Opencv
           uuid: 21238c00-26dd-11e8-b467-0ed5f89f718b
           name: 
+          description: 
           properties:
           - name: threshold
             type: Float
             value: 3e-4
+            description: 
             values: []
         - type: SolAR3DOverlayOpencv
           uuid: 2db01f59-9793-4cd5-8e13-b25d0ed5735b
           name: 
+          description: 
           properties:
           - name: position
             type: Float
             value: 
+            description: 
             values:
             - 0
             - 0
@@ -1862,6 +2062,7 @@ MonoBehaviour:
           - name: orientation
             type: Float
             value: 
+            description: 
             values:
             - 0.0
             - 0.0
@@ -1869,6 +2070,7 @@ MonoBehaviour:
           - name: size
             type: Float
             value: 
+            description: 
             values:
             - 0.285
             - 0.197
@@ -1876,18 +2078,22 @@ MonoBehaviour:
         - type: SolAR2DOverlayOpencv
           uuid: cc51d685-9797-4ffd-a9dd-cec4f367fa6a
           name: 
+          description: 
           properties:
           - name: thickness
             type: UnsignedInteger
             value: 1
+            description: 
             values: []
           - name: radius
             type: UnsignedInteger
             value: 3
+            description: 
             values: []
           - name: color
             type: UnsignedInteger
             value: 
+            description: 
             values:
             - 0
             - 255
@@ -1895,52 +2101,64 @@ MonoBehaviour:
           - name: randomColor
             type: UnsignedInteger
             value: 0
+            description: 
             values: []
         - type: SolARImageViewerOpencv
           uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
           name: 
+          description: 
           properties:
           - name: title
             type: string
             value: Natural Image Marker
+            description: 
             values: []
           - name: exitKey
             type: Integer
             value: 27
+            description: 
             values: []
           - name: width
             type: Integer
             value: 0
+            description: 
             values: []
           - name: height
             type: Integer
             value: 0
+            description: 
             values: []
         - type: SolARImageViewerOpencv
           uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
           name: keypoints
+          description: 
           properties:
           - name: title
             type: string
             value: Reference KeyPoints
+            description: 
             values: []
           - name: exitKey
             type: Integer
             value: 27
+            description: 
             values: []
           - name: width
             type: Integer
             value: 0
+            description: 
             values: []
           - name: height
             type: Integer
             value: 0
+            description: 
             values: []
 --- !u!4 &1446960885
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1446960883}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -1953,7 +2171,8 @@ Transform:
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1517995526}
@@ -1969,10 +2188,12 @@ GameObject:
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1517995524}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: c3fe0eab6d1f9bd438e296dd59b8688c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -2161,90 +2382,112 @@ MonoBehaviour:
         - type: SolARCameraOpencv
           uuid: 5B7396F4-A804-4F3C-A0EB-FB1D56042BB4
           name: 
+          description: 
           properties:
           - name: calibrationFile
             type: string
             value: camera_calibration.yml
+            description: 
             values: []
           - name: deviceID
             type: UnsignedInteger
             value: 0
+            description: 
             values: []
         - type: SolARVideoAsCameraOpencv
           uuid: fa4a780a-9720-11e8-9eb6-529269fb1459
           name: 
+          description: 
           properties:
           - name: calibrationFile
             type: string
             value: camera_calibration.yml
+            description: 
             values: []
           - name: videoPath
             type: string
             value: video.mp4
+            description: 
             values: []
         - type: SolARMarker2DSquaredBinaryOpencv
           uuid: 5d2b8da9-528e-4e5e-96c1-f883edcf3b1c
           name: 
+          description: 
           properties:
           - name: filePath
             type: string
             value: fiducialMarker.yml
+            description: 
             values: []
         - type: SolARImageFilterBinaryOpencv
           uuid: e5fd7e9a-fcae-4f86-bfc7-ea8584c298b2
           name: 
+          description: 
           properties:
           - name: min
             type: Integer
             value: -1
+            description: 
             values: []
           - name: max
             type: Integer
             value: 255
+            description: 
             values: []
         - type: SolARContoursExtractorOpencv
           uuid: 6acf8de2-cc63-11e7-abc4-cec278b6b50a
           name: 
+          description: 
           properties:
           - name: minContourEdges
             type: Integer
             value: 4
+            description: 
             values: []
         - type: SolARContoursFilterBinaryMarkerOpencv
           uuid: 4309dcc6-cc73-11e7-abc4-cec278b6b50a
           name: 
+          description: 
           properties:
           - name: epsilon
             type: Float
             value: 0.05
+            description: 
             values: []
           - name: minContourLength
             type: Float
             value: 20.0
+            description: 
             values: []
           - name: minDistanceBetweenContourCorners
             type: Float
             value: 10.0
+            description: 
             values: []
         - type: SolARPerspectiveControllerOpencv
           uuid: 9c960f2a-cd6e-11e7-abc4-cec278b6b50a
           name: 
+          description: 
           properties:
           - name: outputImageWidth
             type: Integer
             value: 640
+            description: 
             values: []
           - name: outputImageHeight
             type: Integer
             value: 480
+            description: 
             values: []
         - type: SolAR2DOverlayOpencv
           uuid: cc51d685-9797-4ffd-a9dd-cec4f367fa6a
           name: contours
+          description: 
           properties:
           - name: color
             type: UnsignedInteger
             value: 
+            description: 
             values:
             - 128
             - 128
@@ -2252,30 +2495,37 @@ MonoBehaviour:
           - name: thickness
             type: UnsignedInteger
             value: 3
+            description: 
             values: []
         - type: SolAR2DOverlayOpencv
           uuid: cc51d685-9797-4ffd-a9dd-cec4f367fa6a
           name: circles
+          description: 
           properties:
           - name: thickness
             type: UnsignedInteger
             value: 3
+            description: 
             values: []
           - name: radius
             type: UnsignedInteger
             value: 6
+            description: 
             values: []
           - name: randomColor
             type: UnsignedInteger
             value: 1
+            description: 
             values: []
         - type: SolAR3DOverlayBoxOpencv
           uuid: 2db01f59-9793-4cd5-8e13-b25d0ed5735b
           name: 
+          description: 
           properties:
           - name: position
             type: Float
             value: 
+            description: 
             values:
             - 1,62
             - 0
@@ -2283,6 +2533,7 @@ MonoBehaviour:
           - name: orientation
             type: Float
             value: 
+            description: 
             values:
             - 0.0
             - 0.0
@@ -2290,6 +2541,7 @@ MonoBehaviour:
           - name: size
             type: Float
             value: 
+            description: 
             values:
             - 0,3
             - -1,56
@@ -2297,108 +2549,134 @@ MonoBehaviour:
         - type: SolARImageViewerOpencv
           uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
           name: 
+          description: 
           properties:
           - name: title
             type: string
             value: Original Image
+            description: 
             values: []
           - name: exitKey
             type: Integer
             value: 27
+            description: 
             values: []
           - name: width
             type: Integer
             value: 0
+            description: 
             values: []
           - name: height
             type: Integer
             value: 0
+            description: 
             values: []
         - type: SolARImageViewerOpencv
           uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
           name: grey
+          description: 
           properties:
           - name: title
             type: string
             value: Grey Image
+            description: 
             values: []
           - name: exitKey
             type: Integer
             value: 27
+            description: 
             values: []
           - name: width
             type: Integer
             value: 0
+            description: 
             values: []
           - name: height
             type: Integer
             value: 0
+            description: 
             values: []
         - type: SolARImageViewerOpencv
           uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
           name: binary
+          description: 
           properties:
           - name: title
             type: string
             value: Binary Image
+            description: 
             values: []
           - name: exitKey
             type: Integer
             value: 27
+            description: 
             values: []
           - name: width
             type: Integer
             value: 0
+            description: 
             values: []
           - name: height
             type: Integer
             value: 0
+            description: 
             values: []
         - type: SolARImageViewerOpencv
           uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
           name: contours
+          description: 
           properties:
           - name: title
             type: string
             value: Contours Image
+            description: 
             values: []
           - name: exitKey
             type: Integer
             value: 27
+            description: 
             values: []
           - name: width
             type: Integer
             value: 0
+            description: 
             values: []
           - name: height
             type: Integer
             value: 0
+            description: 
             values: []
         - type: SolARImageViewerOpencv
           uuid: 19ea4e13-7085-4e3f-92ca-93f200ffb01b
           name: filteredContours
+          description: 
           properties:
           - name: title
             type: string
             value: Filtered Contours Image
+            description: 
             values: []
           - name: exitKey
             type: Integer
             value: 27
+            description: 
             values: []
           - name: width
             type: Integer
             value: 0
+            description: 
             values: []
           - name: height
             type: Integer
             value: 0
+            description: 
             values: []
 --- !u!4 &1517995526
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1517995524}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
